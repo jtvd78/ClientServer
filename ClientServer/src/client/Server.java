@@ -33,25 +33,6 @@ public class Server implements NodeObject{
 	public void connect() throws UnknownHostException, IOException{
 		
 		Socket socket = new Socket(InetAddress.getByName(ss.address),ss.port);
-		/*
-		SSLSocket socket = (SSLSocket) SSLSocketFactory.getDefault().createSocket(InetAddress.getByName(ss.address),ss.port);
-		String[] suite =  {"TLS_ECDH_ECDSA_WITH_AES_128_CBC_SHA"};
-		socket.setEnabledCipherSuites(suite);
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		String[] aaa = socket.getEnabledCipherSuites();
-		
-		for(int c = 0; c < aaa.length; c++){
-			System.out.println(aaa[c]);
-		}	
-		*/
 		
 		c = new Connection(socket,this);	
 		c.start();
