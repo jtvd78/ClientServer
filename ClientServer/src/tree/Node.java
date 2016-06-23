@@ -3,48 +3,16 @@ package tree;
 import java.io.File;
 import java.util.ArrayList;
 
-import javax.swing.JComponent;
-import javax.swing.JPanel;
-
 public class Node {
-	
-	public enum Type{
-		SERVER,USER
-	}
 	
 	Node parent;
 	String name;
 	boolean expanded = false;
 	
 	ArrayList<Node> nodeList = new ArrayList<Node>();
-	NodeObject object;
-	Type type;
 	
 	public Node(String name){
 		this.name = name;
-		object = new BlankNodeObject();
-	}
-	
-	public Node(String name, NodeObject o){
-		this.name = name;
-		object = o;
-	}
-	
-	class BlankNodeObject implements NodeObject{
-
-		@Override
-		public boolean hasNotification() {
-			return false;
-		}
-
-		@Override
-		public JPanel getPanel() {
-			return null;
-		}
-	}
-	
-	public Type getType(){
-		return type;
 	}
 	
 	public String getName(){
@@ -70,17 +38,7 @@ public class Node {
 	
 	public Node getNode(int index){
 		return nodeList.get(index);
-	}
-	
-	
-	public NodeObject getNodeObject(){
-		return object;
-	}
-	
-	public void setNodeObject(NodeObject o){
-		object = o;
-	}
-	
+	}	
 	
 	public void setExpanded(boolean e){
 		expanded = e;
@@ -96,18 +54,7 @@ public class Node {
 		}else{
 			return (parent.getPath() + File.separator + name);
 		}		
-	}
-	
-	
-	public Node getNodeByObject(NodeObject o){
-		for(Node node : nodeList){
-			if(node.getNodeObject().equals(o)){
-				return node;
-			}
-		}
-		return null;
-	}
-	
+	}	
 	
 	public int getLevel(){
 		return 1+parent.getLevel();
@@ -152,9 +99,5 @@ public class Node {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public JComponent getPanel() {
-		return object.getPanel();
 	}
 }

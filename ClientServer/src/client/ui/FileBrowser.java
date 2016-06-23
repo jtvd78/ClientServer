@@ -11,14 +11,14 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 
+import client.Server;
 import client.net.Connection;
 import shared.net.Message;
 import tree.Node;
-import tree.NodeObject;
 import tree.Path;
 import tree.Tree;
 
-public class FileBrowser extends JPanel implements NodeObject{
+public class FileBrowser extends JPanel{
 	
 	Node root;
 	
@@ -29,10 +29,15 @@ public class FileBrowser extends JPanel implements NodeObject{
 	JList<String> fileList;
 	JLabel loading;
 
+	Server server;
+	
 	Connection c; 
 	
-	public FileBrowser(){
+	public FileBrowser(Server server){
 		super(new BorderLayout());
+		
+		this.server = server;
+		
 		root = new Tree();
 		
 		ListListener ll = new ListListener();
@@ -49,13 +54,13 @@ public class FileBrowser extends JPanel implements NodeObject{
 		
 	}
 	
-	public void setConnection(Connection c){
-		this.c = c;
-		updateBrowser();
-	}
-	
 	private class ListListener implements MouseListener{
 		public void mousePressed(MouseEvent e) {
+			
+			if(c == null){
+				updateBrowser();
+			}
+			
 			
 			if(e.getButton() == 3){
 				path.goUp();
@@ -74,6 +79,16 @@ public class FileBrowser extends JPanel implements NodeObject{
 	}
 	
 	public void updateBrowser(){
+		
+		//Make sure there's a connection to the server first
+		if(c == null){
+			c = server.getConnection();
+			if(c == null){
+				return;
+			}
+		}
+		
+		
 		Message m = new Message(Message.Type.GET_FILELIST);
 		m.put(path.toString());
 		c.sendMessage(m);
@@ -91,15 +106,5 @@ public class FileBrowser extends JPanel implements NodeObject{
 		fileList.setListData(strings);
 		fileList.repaint();
 		repaint();
-	}
-
-	@Override
-	public boolean hasNotification() {
-		return false;
-	}
-
-	@Override
-	public JPanel getPanel() {
-		return this;
 	}
 }
