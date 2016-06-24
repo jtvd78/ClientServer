@@ -24,10 +24,9 @@ public class ServerNode extends com.hoosteen.tree.ComponentNode{
 		this.server = server;
 		comp = new ServerPanel(server);
 		
-		users = new UsersNode();
-		file = new FileBrowserNode(server);
-		addNode(file);
-		addNode(users);
+		
+		addNode(users = new UsersNode());
+		addNode(file = new FileBrowserNode(server));
 	
 		this.addRightClickOption(new JMenuItem(new DisconnectAction()));
 	}	
@@ -39,11 +38,7 @@ public class ServerNode extends com.hoosteen.tree.ComponentNode{
 		}
 		
 		public void actionPerformed(ActionEvent e) {
-			Server currentServer = Client.getClient().getServerManager().getCurrentServer();
-			
-			if(currentServer != null){
-				Client.getClient().getServerManager().removeServer(currentServer);
-			}
+			Client.getClient().getServerManager().removeServer(server);
 		}
 	}
 

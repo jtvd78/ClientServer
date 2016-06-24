@@ -42,7 +42,7 @@ public class Frame extends JFrame{
 	
 	private void init(){
 		//Split Pane
-		split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
+		split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, true);
 		split.setDividerLocation(150);
 		split.setResizeWeight(0);
 		
@@ -50,6 +50,7 @@ public class Frame extends JFrame{
 		data = new BaseNode();
 		MainTree t = new MainTree(data);
 		com.hoosteen.tree.TreeComp tc = new com.hoosteen.tree.TreeComp(this,t);
+		tc.allowNodeRemoval(false);
 		
 		tc.addNodeEventListner(new NodeEventListener(){
 

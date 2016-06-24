@@ -1,8 +1,10 @@
 package server.file;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import server.ui.Console;
+import shared.net.FileData;
 
 public class FileHandler{
 	
@@ -12,13 +14,24 @@ public class FileHandler{
 		this.root = root; 
 	}
 	
-	public synchronized String[] getFileList(String path){
+	public synchronized FileData[] getFileList(String path){
 		Console.out.println(path);
-		File dir = new File(root + path);
+		File dir = new File(root + path);	
+		
 		if(dir.isDirectory()){
-			return dir.list();
+			
+			ArrayList<FileData> files = new ArrayList<FileData>();
+			
+			for(File f : dir.listFiles()){
+				files.add(new FileData(f.getName(), f.length(), f.isDirectory()));
+			}		
+			
+			return files.toArray(new FileData[0]);
 		}else{
 			return null;
 		}
+		
+		
+		
 	}
 }
