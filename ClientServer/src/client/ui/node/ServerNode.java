@@ -15,17 +15,19 @@ import client.ui.ServerPanel;
 public class ServerNode extends com.hoosteen.tree.ComponentNode{
 	
 	Server server;
+	
 	JComponent comp;
-	
-	HashMap<User, UserNode> userNodes = new HashMap<User, UserNode>();
-	
+	UsersNode users;
+	FileBrowserNode file;
 	
 	public ServerNode(Server server){
 		this.server = server;
 		comp = new ServerPanel(server);
 		
-		FileBrowserNode file = new FileBrowserNode(server);
+		users = new UsersNode();
+		file = new FileBrowserNode(server);
 		addNode(file);
+		addNode(users);
 	
 		this.addRightClickOption(new JMenuItem(new DisconnectAction()));
 	}	
@@ -51,16 +53,11 @@ public class ServerNode extends com.hoosteen.tree.ComponentNode{
 	}
 
 	public void addUser(User u) {
-		UserNode node = new UserNode(u);
-		userNodes.put(u, node);
-		addNode(node);
+		users.addUser(u);
 	}
 
 	public void removeUser(User u) {
-		UserNode toRemove = userNodes.get(u);
-		if(toRemove != null){
-			removeNode(toRemove);
-		}
+		users.removeUser(u);
 	}
 	
 	public String toString(){

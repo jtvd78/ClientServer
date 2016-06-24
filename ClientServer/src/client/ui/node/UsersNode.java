@@ -2,6 +2,7 @@ package client.ui.node;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.HashMap;
 
 import javax.swing.JComponent;
 
@@ -15,6 +16,10 @@ public class UsersNode extends ComponentNode{
 	
 	UsersComp comp;
 	
+	
+
+	HashMap<User, UserNode> userNodes = new HashMap<User, UserNode>();
+	
 	public UsersNode(){
 		
 		comp = new UsersComp();
@@ -24,9 +29,16 @@ public class UsersNode extends ComponentNode{
 	public void addUser(User u){
 		
 		UserNode node = new UserNode(u);
-		
+		userNodes.put(u, node);
 		addNode(node);
 		
+	}
+	
+	public void removeUser(User u) {
+		UserNode toRemove = userNodes.get(u);
+		if(toRemove != null){
+			removeNode(toRemove);
+		}
 	}
 
 	@Override
@@ -46,5 +58,9 @@ public class UsersNode extends ComponentNode{
 				g.drawString(n.toString(), 0, ctr*15);
 			}
 		}
+	}
+	
+	public String toString(){
+		return "Users";
 	}
 }

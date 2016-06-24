@@ -1,6 +1,6 @@
 package server.net;
 
-import server.ServerServer;
+import server.ServerStart;
 import server.ServerUser;
 import server.file.FileHandler;
 import server.ui.Console;
@@ -11,15 +11,14 @@ public class ServerMessageHandler {
 	
 	ServerUser u;
 	ServerConnection c;
-	ServerServer s;
+	ServerStart s;
 	FileHandler fileHandler;
 	
 	public ServerMessageHandler(ServerConnection c){
-		s = ServerServer.mainServer;
+		s = ServerStart.mainServer;
 		this.c = c;
 		fileHandler = s.getFileHandler();
-	}
-	
+	}	
 	
 	public void handleMessage(Message m){
 		Console.out.println(m.type.toString());
@@ -36,12 +35,6 @@ public class ServerMessageHandler {
 					send.put(m.get(0));
 					send.put(u.uID);
 					s.sendPMToClient(send,(int)m.get(1));
-		
-		
-		
-		
-		
-		
 		
 					break;
 							
@@ -65,10 +58,6 @@ public class ServerMessageHandler {
 			
 			
 		}
-		
-		
-		
-		
 	}
 	
 	//HANDLE MESSAGE

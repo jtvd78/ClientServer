@@ -15,14 +15,12 @@ import com.hoosteen.tree.ComponentNode;
 import com.hoosteen.tree.Node;
 import com.hoosteen.tree.NodeEvent;
 import com.hoosteen.tree.NodeEventListener;
-import com.hoosteen.tree.Tree;
 
 import client.Client;
 import client.Server;
 import client.User;
 import client.ui.node.BaseNode;
 import client.ui.node.MainTree;
-import tree.TreeComp;
 
 public class Frame extends JFrame{
 	
