@@ -7,14 +7,15 @@ import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
+import com.hoosteen.graphics.table.TableActionListener;
+import com.hoosteen.graphics.table.TableComp;
+import com.hoosteen.graphics.table.TableData;
+import com.hoosteen.graphics.table.TableDataSource;
+
 import client.Server;
 import client.net.Connection;
-import shared.net.FileData;
+import shared.file.FileData;
 import shared.net.Message;
-import shared.net.TableActionListener;
-import shared.net.TableComp;
-import shared.net.TableData;
-import shared.net.TableDataSource;
 
 public class FileBrowser extends JPanel implements TableDataSource<FileData>{
 	

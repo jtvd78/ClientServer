@@ -1,6 +1,8 @@
-package shared.net;
+package shared.file;
 
 import java.io.Serializable;
+
+import com.hoosteen.graphics.table.TableData;
 
 public class FileData implements TableData, Serializable{
 	
@@ -23,7 +25,7 @@ public class FileData implements TableData, Serializable{
 		return new String[]{name,formatFileSize(size), Boolean.toString(directory)};
 	}
 	
-	private static final String[] prefixes = new String[]{"kB", "MB", "GB", "TB"};
+	private static final String[] prefixes = new String[]{"B","kB", "MB", "GB", "TB"};
 	
 	public static String formatFileSize(long filesize){
 		

@@ -4,7 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 import server.ui.Console;
-import shared.net.FileData;
+import shared.file.FileData;
 
 public class FileHandler{
 	
