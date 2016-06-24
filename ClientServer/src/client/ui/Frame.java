@@ -1,21 +1,32 @@
 package client.ui;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
+import javax.swing.SwingConstants;
 
+import com.hoosteen.tree.ComponentNode;
+import com.hoosteen.tree.Node;
+import com.hoosteen.tree.NodeEvent;
+import com.hoosteen.tree.NodeEventListener;
+
+import client.Client;
 import client.Server;
 import client.User;
-import tree.TreeComp;
+import client.ui.node.BaseNode;
+import client.ui.node.MainTree;
 
 public class Frame extends JFrame{
 	
-	//Panels
-	TreeComp tree;
+	BaseNode data;
+	
+	
 	JSplitPane split;
 	JPanel rightPanel;
 
@@ -35,14 +46,45 @@ public class Frame extends JFrame{
 		split.setDividerLocation(150);
 		split.setResizeWeight(0);
 		
-		//Server Tree
-		tree = new TreeComp(); 
+		
+		data = new BaseNode();
+		MainTree t = new MainTree(data);
+		com.hoosteen.tree.TreeComp tc = new com.hoosteen.tree.TreeComp(this,t);
+		
+		tc.addNodeEventListner(new NodeEventListener(){
+
+			@Override
+			public void nodeRightClicked(String text, NodeEvent event) {
+				//Do nothing
+			}
+
+			@Override
+			public void nodeLeftClicked(NodeEvent nodeEvent) {
+				
+				Node n = nodeEvent.getNode();
+				
+				JComponent pan = ((ComponentNode)n).getComponent();
+				 
+				if(pan == null){
+					pan = new JPanel(new BorderLayout());
+					 
+					JLabel lb = new JLabel(n.toString());
+					lb.setHorizontalAlignment(SwingConstants.CENTER);
+					 
+					pan.add(lb,BorderLayout.CENTER);
+				}
+				
+				Client.getClient().getFrame().setRightPanel(pan);		
+				
+			}
+			
+		});
 		
 		//Split panels
 		rightPanel = new JPanel(new GridLayout(0,1));
 		rightPanel.setBackground(Color.white);
 		
-		split.setLeftComponent(tree);
+		split.setLeftComponent(tc);
 		split.setRightComponent(rightPanel);
 		
 		add(split);
@@ -59,14 +101,14 @@ public class Frame extends JFrame{
 	}
 	
 	public void addUser(User u, Server s){
-		tree.addUser(u, s);
+		data.addUser(u, s);
 	}
 
 	public void removeUser(User u, Server s) {
-		tree.removeUser(u, s);
+		data.removeUser(u, s);
 	}
 
-	public TreeComp getTree() {
-		return tree;
+	public BaseNode getTree() {
+		return data;
 	}
 }

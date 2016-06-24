@@ -11,16 +11,17 @@ import server.net.ConnectionController;
 import server.ui.Console;
 import shared.net.Message;
 
-public class ServerServer {
-
-	public static ServerServer mainServer;
+public class ServerStart {
 	
-	LoginManager loginManager;
 	FileHandler fileHandler;
+	LoginManager loginManager;
+	
+	public static ServerStart mainServer;
+	
 	private ArrayList<ServerUser> userList = new ArrayList<ServerUser>();
 	
 	public static void main(String[] args){
-		new ServerServer().start();
+		new ServerStart().start();
 	}
 	
 	public void start(){
@@ -29,10 +30,10 @@ public class ServerServer {
 		
 		//Setup Console Window
 		Console.init();
-		setNativeUI();
+		com.hoosteen.graphics.Tools.setNativeUI();
 		
-		//Init Server
-		init();
+		//Init login manager
+		loginManager = new LoginManager();
 		
 		//Init FileHandler
 		fileHandler = new FileHandler(client.Settings.fileRoot);
@@ -40,10 +41,6 @@ public class ServerServer {
 		//Start ConnectionController
 		ConnectionController cc = new ConnectionController();
 		cc.init();
-	}
-	
-	private void init(){
-		loginManager = new LoginManager();
 	}
 	
 	public boolean login(ServerUser u, String username, String password, String version, int ID){
@@ -62,14 +59,11 @@ public class ServerServer {
 		
 		boolean result = loginManager.login(u, username, password);
 		
-		if(result){
-			
+		if(result){			
 			//Add Existing users
 			for(ServerUser uu : userList){
 				u.addUser(uu);
-			}
-			
-			
+			}			
 			
 			addUser(u);
 			Message m = new Message(Message.Type.CORRECT_LP);
@@ -82,24 +76,6 @@ public class ServerServer {
 		}
 		
 		return result;
-	}
-	
-	public void setNativeUI(){
-		try {
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (UnsupportedLookAndFeelException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 	
 	public void addUser(ServerUser u){
@@ -122,8 +98,7 @@ public class ServerServer {
 		Console.out.println(u.getName() + " left the server");
 	}
 	
-	public void sendChatToClients(Message m){
-		
+	public void sendChatToClients(Message m){		
 		for(ServerUser u : userList){
 			u.sendMessage(m);
 		}

@@ -8,13 +8,13 @@ import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
-import tree.NodeObject;
 import client.net.Connection;
 import client.ui.FileBrowser;
+import client.ui.ServerPanel;
 import shared.net.Message;
 
 
-public class Server implements NodeObject{
+public class Server{
 	
 	Connection c; 
 	ServerPanel panel;
@@ -27,7 +27,7 @@ public class Server implements NodeObject{
 		this.ss = ss;
 		
 		panel = new ServerPanel(this);
-		fileBrowser = new FileBrowser();
+		fileBrowser = new FileBrowser(this);
 	}
 	
 	public void connect() throws UnknownHostException, IOException{
@@ -36,7 +36,6 @@ public class Server implements NodeObject{
 		
 		c = new Connection(socket,this);	
 		c.start();
-		fileBrowser.setConnection(c);
 		
 		
 		System.out.println("Connecting to " + ss.name + " at " + ss.address + " on port " + ss.port + " with the username " + ss.login + " and the password " + ss.password);
@@ -132,6 +131,10 @@ public class Server implements NodeObject{
 	public FileBrowser getFileBrowser() {
 		return fileBrowser;
 	}
+	
+	public Connection getConnection(){
+		return c;
+	}
 
 	public JPanel getPanel() {
 		return panel;
@@ -139,11 +142,5 @@ public class Server implements NodeObject{
 
 	public void sendMessage(Message m) {
 		c.sendMessage(m);
-	}
-
-	@Override
-	public boolean hasNotification() {
-		// TODO Auto-generated method stub
-		return false;
 	}
 }

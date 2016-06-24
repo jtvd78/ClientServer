@@ -49,7 +49,8 @@ public class MessageHandler {
 		case UPDATE_NAME:	String name = (String)m.get(0);
 							User u = s.getUser((int)m.get(1));
 							u.setName(name);
-							Client.getClient().getFrame().getTree().updateUserName(u,s);
+						//	Client.getClient().getFrame().getTree().updateUserName(u,s);
+							System.out.println("Update User Name");
 							break;
 					
 		default: System.out.println("Unhandled Message : " + m.type.toString());

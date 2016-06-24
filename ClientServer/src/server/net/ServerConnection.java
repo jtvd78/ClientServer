@@ -10,7 +10,7 @@ import javax.net.ssl.SSLSocket;
 
 import client.Server;
 import client.User;
-import server.ServerServer;
+import server.ServerStart;
 import server.ServerUser;
 import server.ui.Console;
 import shared.net.Message;
@@ -51,7 +51,7 @@ public class ServerConnection{
 	
 	public void close(){
 		connected = false;
-		ServerServer.mainServer.removeUser(u);
+		ServerStart.mainServer.removeUser(u);
 		try {
 			oos.close();
 			socket.close();

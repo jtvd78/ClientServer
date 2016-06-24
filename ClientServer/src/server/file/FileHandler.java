@@ -17,7 +17,8 @@ public class FileHandler{
 		File dir = new File(root + path);
 		if(dir.isDirectory()){
 			return dir.list();
+		}else{
+			return null;
 		}
-		else return null;
 	}
 }

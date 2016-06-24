@@ -1,4 +1,4 @@
-package client;
+package client.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Insets;
@@ -15,26 +15,27 @@ import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
 import javax.swing.KeyStroke;
 
-public class ServerPanel extends JPanel{
+import client.Client;
+import client.User;
+
+public class UserPanel extends JPanel{
+	
+	User u;
 	
 	Chat chat;
 	InputPanel input;
 	
-	Server s;
-	
-	public ServerPanel(Server s){
+	public UserPanel(User u){
 		super(new BorderLayout());
-		this.s = s;
-		
+		this.u = u;
 		
 		chat = new Chat();
 		input = new InputPanel();
 		
-		//Divider between Top and Bottom [Right Side]
 		JSplitPane vert = new JSplitPane(JSplitPane.VERTICAL_SPLIT,chat, input);
 		vert.setResizeWeight(1);
 		
-		add(vert,BorderLayout.CENTER);
+		add(vert,BorderLayout.CENTER);			
 	}
 	
 	private class InputPanel extends JPanel{
@@ -80,7 +81,8 @@ public class ServerPanel extends JPanel{
 		}
 		
 		private void send(String str){
-			s.sendChat(str);
+			u.getServer().sendPM(str,u.getID());
+			updateChat("<" + Client.getClient().getSettings().name + "> " + str);
 		}
 	}
 	
