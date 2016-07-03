@@ -10,6 +10,8 @@ import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+import shared.file.FilePath;
+
 
 
 public class Console extends JFrame{
@@ -166,5 +168,11 @@ public class Console extends JFrame{
 	
 	public void printTime(){
 		ta.append("[" + getTime() + "] ");
+	}
+
+	public void println(Object obj) {
+		printTime();
+		ta.append(obj.toString() + "\n");
+		ta.setCaretPosition(ta.getDocument().getLength());
 	}
 }

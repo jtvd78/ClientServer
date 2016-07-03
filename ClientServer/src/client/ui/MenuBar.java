@@ -8,7 +8,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
-import client.Client;
+import client.ClientStart;
 import client.Server;
 import client.ServerSettings;
 import client.res.SavedServers;
@@ -101,7 +101,7 @@ class MenuBar extends JMenuBar{
 		}
 
 		public void actionPerformed(ActionEvent e) {
-			new ConnectToServerDialog(Client.getClient().getFrame(),server).setVisible(true);
+			new ConnectToServerDialog(ClientStart.getClient().getFrame(),server).setVisible(true);
 		}
 	}
 	
@@ -125,10 +125,10 @@ class MenuBar extends JMenuBar{
 		
 		public void actionPerformed(ActionEvent e) {
 			
-			Server currentServer = Client.getClient().getServerManager().getCurrentServer();
+			Server currentServer = ClientStart.getClient().getFrame().getCurrentServer();
 			
 			if(currentServer != null){
-				Client.getClient().getServerManager().removeServer(currentServer);
+				ClientStart.getClient().getFrame().removeServer(currentServer);
 			}
 		}
 	}
@@ -140,7 +140,7 @@ class MenuBar extends JMenuBar{
 		}
 		
 		public void actionPerformed(ActionEvent e) {
-			new ConnectToServerDialog(Client.getClient().getFrame()).setVisible(true);
+			new ConnectToServerDialog(ClientStart.getClient().getFrame()).setVisible(true);
 		}
 	}
 	
@@ -151,7 +151,7 @@ class MenuBar extends JMenuBar{
 		}
 		
 		public void actionPerformed(ActionEvent arg0) {
-			Client.getClient().requestExit();
+			ClientStart.getClient().requestExit();
 		}
 	}	
 	

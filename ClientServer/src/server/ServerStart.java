@@ -59,13 +59,23 @@ public class ServerStart {
 		
 		boolean result = loginManager.login(u, username, password);
 		
-		if(result){			
+		if(result){	
+			
 			//Add Existing users
 			for(ServerUser uu : userList){
 				u.addUser(uu);
-			}			
+			}
 			
-			addUser(u);
+			userList.add(u);
+			
+			for(ServerUser uu : userList){
+				uu.addUser(u);
+			}
+			
+						
+			
+			Console.out.println(u.getName() + " connected to the server");
+			
 			Message m = new Message(Message.Type.CORRECT_LP);
 			m.setID(ID);
 			u.sendMessage(m);
@@ -76,16 +86,6 @@ public class ServerStart {
 		}
 		
 		return result;
-	}
-	
-	public void addUser(ServerUser u){
-		userList.add(u);
-		
-		for(ServerUser uu : userList){
-			uu.addUser(u);
-		}
-		
-		Console.out.println(u.getName() + " connected to the server");
 	}
 
 	public synchronized void removeUser(ServerUser u) {

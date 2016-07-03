@@ -2,7 +2,7 @@ package client.net;
 
 import java.util.ArrayList;
 
-import client.Client;
+import client.ClientStart;
 import client.Server;
 import client.User;
 import shared.net.Message;
@@ -24,7 +24,7 @@ public class MessageHandler {
 	
 	public void handleMessage(Message m){
 		int messageID = m.getID();
-		System.out.println("ID : " + m.getID());
+		System.out.println("ID : " + m.getID() + " : " + m.type);
 		
 		for(Message pm : pendingMessages){
 			if(pm.getID() == messageID){
@@ -34,7 +34,9 @@ public class MessageHandler {
 		}
 		
 		switch(m.type){
-		case PM:			s.getUser((int)m.get(1)).PM("<" + s.getUser((int)m.get(1)).getName() + "> " + (String)m.get(0));
+		case PM:			ClientStart.getClient().PM((String)m.get(0), s, (int)m.get(1));
+							
+						//	s.getUser((int)m.get(1)).PM("<" + s.getUser((int)m.get(1)).getName() + "> " + (String)m.get(0));
 							break;
 							
 		case CHAT:			s.addText("<" + (String)m.get(1) + "> " + (String)m.get(0));

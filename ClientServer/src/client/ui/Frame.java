@@ -3,6 +3,9 @@ package client.ui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.util.Collection;
+import java.util.List;
+import java.util.Set;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -15,20 +18,21 @@ import com.hoosteen.tree.ComponentNode;
 import com.hoosteen.tree.Node;
 import com.hoosteen.tree.NodeEvent;
 import com.hoosteen.tree.NodeEventListener;
+import com.hoosteen.tree.TreeComp;
 
-import client.Client;
+import client.ClientStart;
 import client.Server;
 import client.User;
 import client.ui.node.BaseNode;
-import client.ui.node.MainTree;
 
 public class Frame extends JFrame{
 	
-	BaseNode data;
-	
+	BaseNode data;	
 	
 	JSplitPane split;
 	JPanel rightPanel;
+	
+	Server currentServer;
 
 	public Frame(){
 		
@@ -48,8 +52,7 @@ public class Frame extends JFrame{
 		
 		
 		data = new BaseNode();
-		MainTree t = new MainTree(data);
-		com.hoosteen.tree.TreeComp tc = new com.hoosteen.tree.TreeComp(this,t);
+		TreeComp tc = new TreeComp(this,data);
 		tc.allowNodeRemoval(false);
 		
 		tc.addNodeEventListner(new NodeEventListener(){
@@ -75,8 +78,26 @@ public class Frame extends JFrame{
 					pan.add(lb,BorderLayout.CENTER);
 				}
 				
-				Client.getClient().getFrame().setRightPanel(pan);		
+				ClientStart.getClient().getFrame().setRightPanel(pan);	
 				
+				//Set current server
+				//Find server at root of selected node
+				Node current = n;
+				
+				do{
+					if(current instanceof Server){
+						currentServer = (Server)current;
+						break;
+					}
+					
+					current = current.getParent();
+					
+					if(current == null){
+						currentServer = null;
+						break;
+					}	
+					
+				}while(current != null);			
 			}
 			
 		});
@@ -92,6 +113,10 @@ public class Frame extends JFrame{
 		setJMenuBar(new MenuBar(this));
 	}
 	
+	public Server getCurrentServer(){
+		return currentServer;
+	}
+	
 	public void setRightPanel(JComponent p){
 		
 		rightPanel.removeAll();
@@ -101,15 +126,23 @@ public class Frame extends JFrame{
 		
 	}
 	
-	public void addUser(User u, Server s){
-		data.addUser(u, s);
-	}
-
-	public void removeUser(User u, Server s) {
-		data.removeUser(u, s);
+	public void PM(String message, Server s, int fromUID){
+		data.PM(message, s, fromUID);
 	}
 
 	public BaseNode getTree() {
 		return data;
+	}
+
+	public void removeServer(Server s) {
+		data.removeServer(s);
+	}
+
+	public void addServer(Server s) {
+		data.addServer(s);
+	}
+
+	public Set<Server> getServerList() {
+		return data.getServerList();
 	}
 }

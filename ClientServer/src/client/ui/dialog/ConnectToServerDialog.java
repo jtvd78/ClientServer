@@ -19,7 +19,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
-import client.Client;
+import client.ClientStart;
 import client.Server;
 import client.ServerSettings;
 import client.ui.Frame;
@@ -84,8 +84,11 @@ public class ConnectToServerDialog extends JDialog{
 			Server s = new Server(ss);
 			
 			try {
-				Client.getClient().getServerManager().addServer(s);
+				
+				ClientStart.getClient().addServer(s);		
 				s.connect();
+				
+				
 				setText("Connected");
 			}catch(ConnectException e){
 				setText("Could not connect to server. Connection Refused.");
@@ -165,11 +168,11 @@ public class ConnectToServerDialog extends JDialog{
 				try{
 					serverPort = Integer.parseInt(port.getText());
 					if(serverPort < 0 || serverPort > 65535){
-						JOptionPane.showMessageDialog(Client.getClient().getFrame(),"The entered port is not valid. Please enter a number from 0 to 65535");
+						JOptionPane.showMessageDialog(ClientStart.getClient().getFrame(),"The entered port is not valid. Please enter a number from 0 to 65535");
 						return;
 					}
 				}catch(NumberFormatException nfe){
-					JOptionPane.showMessageDialog(Client.getClient().getFrame(),"The entered port is not a number. Please insert a valid number");
+					JOptionPane.showMessageDialog(ClientStart.getClient().getFrame(),"The entered port is not a number. Please insert a valid number");
 					return;
 				}
 				

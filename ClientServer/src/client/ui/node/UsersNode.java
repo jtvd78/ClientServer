@@ -63,4 +63,22 @@ public class UsersNode extends ComponentNode{
 	public String toString(){
 		return "Users";
 	}
+
+	public void receivePM(String message, int fromUID) {
+		for(User u : userNodes.keySet()){
+			if(u.getID() == fromUID){
+				userNodes.get(u).comp.updateChat("<" + u.getName() + ">" + message);
+			}
+		}
+	}
+
+	public User getUser(int uID) {
+		for(Node n : this){
+			UserNode u = (UserNode)n;
+			if(u.getUser().getID() == uID){
+				return u.getUser();
+			}
+		}
+		return null;
+	}
 }

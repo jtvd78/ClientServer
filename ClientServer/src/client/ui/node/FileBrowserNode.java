@@ -25,4 +25,8 @@ public class FileBrowserNode extends ComponentNode{
 	public String toString(){
 		return "File Browser";
 	}
+	
+	public void dataChanged(){
+		comp.dataChanged();
+	}
 }

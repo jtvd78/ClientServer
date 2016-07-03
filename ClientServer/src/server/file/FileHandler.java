@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import server.ui.Console;
 import shared.file.FileData;
+import shared.file.FilePath;
 
 public class FileHandler{
 	

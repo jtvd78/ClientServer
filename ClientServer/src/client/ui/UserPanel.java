@@ -15,7 +15,7 @@ import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
 import javax.swing.KeyStroke;
 
-import client.Client;
+import client.ClientStart;
 import client.User;
 
 public class UserPanel extends JPanel{
@@ -82,7 +82,7 @@ public class UserPanel extends JPanel{
 		
 		private void send(String str){
 			u.getServer().sendPM(str,u.getID());
-			updateChat("<" + Client.getClient().getSettings().name + "> " + str);
+			updateChat("<" + ClientStart.getClient().getSettings().name + "> " + str);
 		}
 	}
 	

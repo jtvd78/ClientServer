@@ -1,16 +1,17 @@
 package client;
 
+import java.util.Set;
+
 import client.settings.Settings;
 import client.settings.SettingsLoader;
 import client.ui.Frame;
 
 
-public class Client {
+public class ClientStart {
 
 	Frame frame;
 	Settings settings;
-	private ServerManager serverManager;
-	private static Client mainClient;
+	private static ClientStart mainClient;
 	
 	public static void main(String[] args){
 		
@@ -19,7 +20,7 @@ public class Client {
 		
 		//Start up the program
 		
-		mainClient = new Client();
+		mainClient = new ClientStart();
 		mainClient.start();
 	}
 	
@@ -27,7 +28,6 @@ public class Client {
 		
 		//Init Stuff
 		settings = new SettingsLoader().loadSettings();
-		serverManager = new ServerManager();
 		
 		//UI
 		frame = new Frame();
@@ -41,15 +41,27 @@ public class Client {
 		return frame;
 	}
 	
-	public static Client getClient() {
-		return mainClient;
+	public void PM(String message, Server s, int fromUID){
+		frame.PM(message, s, fromUID);
 	}
-
-	public ServerManager getServerManager() {
-		return serverManager;
+	
+	public static ClientStart getClient() {
+		return mainClient;
 	}
 
 	public void requestExit(){
 		System.exit(0);
+	}
+
+	public void addServer(Server s) {
+		frame.addServer(s);
+	}
+
+	public Set<Server> getServerList() {
+		return frame.getServerList();
+	}
+
+	public void removeServer(Server server) {
+		frame.removeServer(server);
 	}
 }

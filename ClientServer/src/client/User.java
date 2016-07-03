@@ -7,7 +7,6 @@ public class User{
 	int uID;
 	private String name;	
 	private Server server;
-	private UserPanel panel;
 	
 	public User(String name, Server server, int uID){
 		this.name = name;
@@ -17,10 +16,6 @@ public class User{
 	
 	public String getName(){
 		return name;
-	}
-	
-	public void PM(String s){
-		panel.updateChat(s);
 	}
 
 	public void setName(String name) {
@@ -33,9 +28,5 @@ public class User{
 	
 	public Server getServer(){
 		return server;
-	}
-	
-	public void setPanel(UserPanel up){
-		panel = up;
 	}
 }

@@ -2,6 +2,8 @@ package client.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Point;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.io.File;
 import java.util.ArrayList;
 
@@ -15,26 +17,27 @@ import com.hoosteen.graphics.table.TableDataSource;
 import client.Server;
 import client.net.Connection;
 import shared.file.FileData;
+import shared.file.FilePath;
 import shared.net.Message;
 
 public class FileBrowser extends JPanel implements TableDataSource<FileData>{
 	
 	
-	Path path;
+	FilePath path;
 	
-	Connection c;
+	
 	Server server;
 	
 
 	FileData[] fileData;	
+	TableComp<FileData> tc;
 
 	public FileBrowser(Server server){
 		super(new BorderLayout());
 		this.server = server;
-		this.path = new Path();
+		this.path = new FilePath();		
 		
-		
-		TableComp<FileData> tc = new TableComp<FileData>(this);
+		tc = new TableComp<FileData>(this);
 		tc.addTableActionListener(new Listener());		
 		add(tc, BorderLayout.CENTER);
 	}
@@ -49,30 +52,35 @@ public class FileBrowser extends JPanel implements TableDataSource<FileData>{
 		return fileData;		
 	}
 	
+	public void dataChanged(){
+		tc.dataChanged();
+	}
+	
 	public void updateBrowser(){
+		
+		Connection c = server.getConnection();
 		
 		//Make sure there's a connection to the server first
 		if(c == null){
-			c = server.getConnection();
-			if(c == null){
-				return;
-			}
-		}		
+			System.out.println("There's a Problem - No server connection in File Browser");
+		}
 		
-		Message m = new Message(Message.Type.GET_FILELIST);
+		Message m = new Message(Message.Type.GET_FILELIST);		
 		m.put(path.toString());
 		c.sendMessage(m);
 		m.waitForResponse();
+		
+		System.out.println(m.getResponse().get(0));
 		
 		
 		fileData = (FileData[])m.getResponse().get(1);	
 
 		repaint();
 	}
-	
+	/*
 	public class Path {
 
-		ArrayList<String> pathList = new ArrayList<String>();
+		private ArrayList<String> pathList = new ArrayList<String>();
 		
 		@Override
 		public String toString(){
@@ -97,6 +105,9 @@ public class FileBrowser extends JPanel implements TableDataSource<FileData>{
 		}
 	}
 	
+	*/
+	
+	
 	private class Listener implements TableActionListener{
 
 		@Override
@@ -107,13 +118,11 @@ public class FileBrowser extends JPanel implements TableDataSource<FileData>{
 		@Override
 		public void rowDoubleClicked(int row, TableData data) {
 			path.add(fileData[row].getName());
-			updateBrowser();
 		}
 
 		@Override
 		public void rowRightClicked(int row, TableData data) {
 			path.goUp();
-			updateBrowser();
 		}
 	}
 

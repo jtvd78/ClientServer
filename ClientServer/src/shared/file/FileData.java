@@ -18,24 +18,26 @@ public class FileData implements TableData, Serializable{
 	
 	@Override
 	public String[] getTableHeaders() {
-		return new String[]{"Name", "Size", "Directory"};
+		return new String[]{"Name", "Size", "Type"};
 	}
 	@Override
 	public String[] getTableValues() {
-		return new String[]{name,formatFileSize(size), Boolean.toString(directory)};
+		return new String[]{name, directory ? "" : formatFileSize(size), directory ? "Folder" : "File"};
 	}
 	
 	private static final String[] prefixes = new String[]{"B","kB", "MB", "GB", "TB"};
 	
-	public static String formatFileSize(long filesize){
+	public static String formatFileSize(long fileSizeLong){
+		
+		float filesize = fileSizeLong;
 		
 		int ctr = 0;
 		while(filesize > 1024){
 			ctr++;
-			filesize /= 1024;
+			filesize /= 1024.0;
 		}
 		
-		return filesize + " " +prefixes[ctr];
+		return String.format("%.2f", filesize) + " " +prefixes[ctr];
 	}
 
 	public String getName() {

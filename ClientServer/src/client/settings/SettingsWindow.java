@@ -12,7 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import client.Client;
+import client.ClientStart;
 import client.Server;
 import shared.net.Message;
 
@@ -25,7 +25,7 @@ public class SettingsWindow extends JDialog{
 		
 		super(owner, "Settings", true);
 		
-		set = Client.getClient().getSettings();
+		set = ClientStart.getClient().getSettings();
 		sp = new SettingsPanel();
 		
 		setLayout(new BorderLayout());
@@ -80,12 +80,12 @@ public class SettingsWindow extends JDialog{
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			Client.getClient().getSettings().name = sp.name.getText();
+			ClientStart.getClient().getSettings().name = sp.name.getText();
 			
 			Message m = new Message(Message.Type.UPDATE_NAME);
-			m.put(Client.getClient().getSettings().name);
+			m.put(ClientStart.getClient().getSettings().name);
 			
-			for(Server s : Client.getClient().getServerManager().getServerList()){
+			for(Server s : ClientStart.getClient().getServerList()){
 				s.sendMessage(m);
 			}
 			

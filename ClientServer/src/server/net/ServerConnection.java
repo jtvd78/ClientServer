@@ -36,7 +36,8 @@ public class ServerConnection{
 		new Thread(new RequestListener()).start();
 	}
 	
-	public void sendMessage(Message m){		
+	public void sendMessage(Message m){
+		
 		try {
 			oos.writeObject(m);
 			oos.flush();

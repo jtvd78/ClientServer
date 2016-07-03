@@ -9,7 +9,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import client.Client;
+import client.ClientStart;
 
 
 
@@ -56,7 +56,7 @@ public class Settings implements Serializable{
 		jp.add(jl);
 		jp.add(jtf);
 		
-		JOptionPane.showMessageDialog(Client.getClient().getFrame(),jp);
+		JOptionPane.showMessageDialog(ClientStart.getClient().getFrame(),jp);
 		
 		String name = jtf.getText();
 		if(name.equals("")){
@@ -69,7 +69,7 @@ public class Settings implements Serializable{
 	public static void showSettingsWindow(){
 		
 		if(settingsWindow == null){
-			settingsWindow = new SettingsWindow(Client.getClient().getFrame());
+			settingsWindow = new SettingsWindow(ClientStart.getClient().getFrame());
 			settingsWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		}
 		

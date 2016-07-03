@@ -4,6 +4,7 @@ import server.ServerStart;
 import server.ServerUser;
 import server.file.FileHandler;
 import server.ui.Console;
+import shared.file.FilePath;
 import shared.net.Message;
 import shared.net.Message.Type;
 
@@ -26,6 +27,8 @@ public class ServerMessageHandler {
 		
 		case LOGIN:	u = c.createUser((String)m.get(0));
 					boolean result = s.login(u, (String)m.get(1),(String)m.get(2),(String)m.get(3), m.getID());
+					
+					
 					if(result){
 						
 					}
@@ -46,6 +49,7 @@ public class ServerMessageHandler {
 			break;
 		case GET_FILELIST: 	String path = (String)m.get(0);
 							Message sendd = new Message(Message.Type.SEND_FILELIST);
+							
 							sendd.put(path);
 							sendd.put(fileHandler.getFileList(path));
 							sendd.setID(m.getID());

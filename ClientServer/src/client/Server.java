@@ -1,33 +1,54 @@
 package client;
 
+import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 
-import javax.swing.JPanel;
+import javax.swing.AbstractAction;
+import javax.swing.JComponent;
+import javax.swing.JMenuItem;
+
+import com.hoosteen.tree.ComponentNode;
 
 import client.net.Connection;
-import client.ui.FileBrowser;
 import client.ui.ServerPanel;
+import client.ui.node.FileBrowserNode;
+import client.ui.node.UsersNode;
 import shared.net.Message;
 
 
-public class Server{
+public class Server extends ComponentNode{
 	
 	Connection c; 
 	ServerPanel panel;
 	ServerSettings ss;
-	FileBrowser fileBrowser;
 	
-	ArrayList<User> userList = new ArrayList<User>();
+	UsersNode users;
+	FileBrowserNode file;
 	
 	public Server(ServerSettings ss){
 		this.ss = ss;
 		
 		panel = new ServerPanel(this);
-		fileBrowser = new FileBrowser(this);
+		
+		addNode(users = new UsersNode());
+		addNode(file = new FileBrowserNode(this));
+		
+		addRightClickOption(new JMenuItem(new DisconnectAction()));
+	}
+	
+	class DisconnectAction extends AbstractAction{
+		
+		public DisconnectAction(){
+			super("Disconnect");
+		}
+		
+		public void actionPerformed(ActionEvent e) {
+			ClientStart.getClient().removeServer(Server.this);
+		}
 	}
 	
 	public void connect() throws UnknownHostException, IOException{
@@ -43,7 +64,7 @@ public class Server{
 		
 		//Login		
 		Message m = new Message(Message.Type.LOGIN);
-		m.put(Client.getClient().getSettings().name);
+		m.put(ClientStart.getClient().getSettings().name);
 		m.put(ss.login);
 		m.put(ss.password);
 		m.put(client.res.Strings.version);
@@ -53,6 +74,12 @@ public class Server{
 		
 		Message re = m.getResponse();
 		System.out.println(re);
+		
+		
+		//Update the contents of the File Browser
+		file.dataChanged();
+		
+		
 		if(re.type == Message.Type.CORRECT_LP){
 			System.out.println("Correct LP");
 		}else if(re.type == Message.Type.INCORRECT_LP){
@@ -65,7 +92,7 @@ public class Server{
 	public void sendChat(String s){
 		Message m = new Message(Message.Type.CHAT);
 		m.put(s);
-		m.put(Client.getClient().getSettings().name);
+		m.put(ClientStart.getClient().getSettings().name);
 		c.sendMessage(m);
 	}
 	
@@ -94,53 +121,43 @@ public class Server{
 	}
 	
 	public void addUser(String s, int uID){
+		
+		System.out.println("ADD USER");
+		
 		User u = new User(s, this, uID);
-		userList.add(u);
-		Client.getClient().getFrame().addUser(u, this);
+		users.addUser(u);
 	}
 	
 	
 	public User getUser(int uID){
-		for(User u : userList){
-			if(u.uID == uID){
-				return u;
-			}
-		}
-		return null;
+		return users.getUser(uID);
 	}
 	
 	
 	
 	public void removeUser(int uID){
 		
-		User remove = null;
-		
-		for(User u : userList){
-			if(u.uID == uID){
-				remove = u;
-			}
-		}
+		User remove = getUser(uID);
 		
 		if(remove != null){
-			userList.remove(remove);
-			Client.getClient().getFrame().removeUser(remove,this);
+			users.removeUser(remove);
 		}
-	}
-	
-
-	public FileBrowser getFileBrowser() {
-		return fileBrowser;
 	}
 	
 	public Connection getConnection(){
 		return c;
 	}
 
-	public JPanel getPanel() {
+	public void sendMessage(Message m) {
+		c.sendMessage(m);
+	}
+
+	@Override
+	public JComponent getComponent() {
 		return panel;
 	}
 
-	public void sendMessage(Message m) {
-		c.sendMessage(m);
+	public void receivePM(String message, int fromUID) {
+		users.receivePM(message, fromUID);
 	}
 }

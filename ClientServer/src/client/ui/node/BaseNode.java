@@ -1,20 +1,24 @@
 package client.ui.node;
 
+import java.util.List;
+import java.util.Set;
+
 import client.Server;
 import client.User;
 
 public class BaseNode extends com.hoosteen.tree.Node{	
 	
-	ServersNode servers;
+	ServerManager servers;
 	TransfersNode transfers;	
 	
 	public BaseNode(){
 		
-		servers = new ServersNode();
+		servers = new ServerManager();
 		transfers = new TransfersNode();		
 		
 		addNode(servers);
 		addNode(transfers);
+		setExpanded(true);
 	}
 	
 	public void addServer(Server s){
@@ -24,12 +28,12 @@ public class BaseNode extends com.hoosteen.tree.Node{
 	public void removeServer(Server s){
 		servers.removeServer(s);
 	}
-	
-	public void addUser(User u, Server s){
-		servers.addUser(u,s);
+
+	public void PM(String message, Server s, int fromUID) {
+		servers.PM(message, s, fromUID);
 	}
-	
-	public void removeUser(User u, Server s){
-		servers.removeUser(u,s);
+
+	public Set<Server> getServerList() {
+		return servers.getServerList();
 	}
 }
