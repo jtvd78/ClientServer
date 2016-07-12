@@ -9,10 +9,10 @@ import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
-import com.hoosteen.graphics.table.TableActionListener;
-import com.hoosteen.graphics.table.TableComp;
-import com.hoosteen.graphics.table.TableData;
-import com.hoosteen.graphics.table.TableDataSource;
+import com.hoosteen.ui.table.TableActionListener;
+import com.hoosteen.ui.table.TableComp;
+import com.hoosteen.ui.table.TableData;
+import com.hoosteen.ui.table.TableDataSource;
 
 import client.Server;
 import client.net.Connection;
@@ -45,9 +45,15 @@ public class FileBrowser extends JPanel implements TableDataSource<FileData>{
 	@Override
 	public FileData[] getData() {
 		
-		if(fileData == null){
-			updateBrowser();
-		}
+		Message m = new Message(Message.Type.GET_FILELIST);		
+		m.put(path.toString());
+		server.sendMessage(m);
+		m.waitForResponse();
+		
+		System.out.println(m.getResponse().get(0));
+		
+		
+		fileData = (FileData[])m.getResponse().get(1);	
 		
 		return fileData;		
 	}
@@ -56,27 +62,6 @@ public class FileBrowser extends JPanel implements TableDataSource<FileData>{
 		tc.dataChanged();
 	}
 	
-	public void updateBrowser(){
-		
-		Connection c = server.getConnection();
-		
-		//Make sure there's a connection to the server first
-		if(c == null){
-			System.out.println("There's a Problem - No server connection in File Browser");
-		}
-		
-		Message m = new Message(Message.Type.GET_FILELIST);		
-		m.put(path.toString());
-		c.sendMessage(m);
-		m.waitForResponse();
-		
-		System.out.println(m.getResponse().get(0));
-		
-		
-		fileData = (FileData[])m.getResponse().get(1);	
-
-		repaint();
-	}
 	/*
 	public class Path {
 

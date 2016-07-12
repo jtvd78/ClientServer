@@ -39,7 +39,7 @@ public class MessageHandler {
 						//	s.getUser((int)m.get(1)).PM("<" + s.getUser((int)m.get(1)).getName() + "> " + (String)m.get(0));
 							break;
 							
-		case CHAT:			s.addText("<" + (String)m.get(1) + "> " + (String)m.get(0));
+		case CHAT:			s.receiveChat((String)m.get(1), (String)m.get(0));
 							break;
 							
 		case ADD_USER:		s.addUser((String)m.get(0),(int)m.get(1));

@@ -5,18 +5,17 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
 
 import javax.swing.AbstractAction;
 import javax.swing.JComponent;
 import javax.swing.JMenuItem;
 
 import com.hoosteen.tree.ComponentNode;
+import com.hoosteen.ui.ChatPanel;
 
 import client.net.Connection;
-import client.ui.ServerPanel;
 import client.ui.node.FileBrowserNode;
-import client.ui.node.UsersNode;
+import client.ui.node.UserManager;
 import shared.net.Message;
 
 
@@ -26,18 +25,32 @@ public class Server extends ComponentNode{
 	ServerPanel panel;
 	ServerSettings ss;
 	
-	UsersNode users;
+	UserManager users;
 	FileBrowserNode file;
 	
 	public Server(ServerSettings ss){
+		super(true);
+		
 		this.ss = ss;
 		
-		panel = new ServerPanel(this);
+		panel = new ServerPanel();
 		
-		addNode(users = new UsersNode());
+		addNode(users = new UserManager());
 		addNode(file = new FileBrowserNode(this));
 		
 		addRightClickOption(new JMenuItem(new DisconnectAction()));
+	}
+	
+	public class ServerPanel extends ChatPanel{
+		
+		@Override
+		public void send(String str){
+			sendChat(str);
+		}
+
+		public void receiveChat(String fromName, String message) {
+			updateChat("<" + fromName + "> " + message);
+		}
 	}
 	
 	class DisconnectAction extends AbstractAction{
@@ -103,6 +116,10 @@ public class Server extends ComponentNode{
 		c.sendMessage(m);
 	}
 	
+	public void receivePM(String message, int fromUID) {
+		users.receivePM(message, fromUID);
+	}
+	
 	public void disconnect(){
 		c.close();
 	}
@@ -115,15 +132,11 @@ public class Server extends ComponentNode{
 		return ss.name;
 	}
 	
-
-	public void addText(String s) {
-		panel.updateChat(s);
+	public void receiveChat(String fromName, String message) {
+		panel.receiveChat(fromName, message);
 	}
 	
-	public void addUser(String s, int uID){
-		
-		System.out.println("ADD USER");
-		
+	public void addUser(String s, int uID){		
 		User u = new User(s, this, uID);
 		users.addUser(u);
 	}
@@ -131,9 +144,7 @@ public class Server extends ComponentNode{
 	
 	public User getUser(int uID){
 		return users.getUser(uID);
-	}
-	
-	
+	}	
 	
 	public void removeUser(int uID){
 		
@@ -143,10 +154,6 @@ public class Server extends ComponentNode{
 			users.removeUser(remove);
 		}
 	}
-	
-	public Connection getConnection(){
-		return c;
-	}
 
 	public void sendMessage(Message m) {
 		c.sendMessage(m);
@@ -155,9 +162,5 @@ public class Server extends ComponentNode{
 	@Override
 	public JComponent getComponent() {
 		return panel;
-	}
-
-	public void receivePM(String message, int fromUID) {
-		users.receivePM(message, fromUID);
 	}
 }

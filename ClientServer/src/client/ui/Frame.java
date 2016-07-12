@@ -55,52 +55,7 @@ public class Frame extends JFrame{
 		TreeComp tc = new TreeComp(this,data);
 		tc.allowNodeRemoval(false);
 		
-		tc.addNodeEventListner(new NodeEventListener(){
-
-			@Override
-			public void nodeRightClicked(String text, NodeEvent event) {
-				//Do nothing
-			}
-
-			@Override
-			public void nodeLeftClicked(NodeEvent nodeEvent) {
-				
-				Node n = nodeEvent.getNode();
-				
-				JComponent pan = ((ComponentNode)n).getComponent();
-				 
-				if(pan == null){
-					pan = new JPanel(new BorderLayout());
-					 
-					JLabel lb = new JLabel(n.toString());
-					lb.setHorizontalAlignment(SwingConstants.CENTER);
-					 
-					pan.add(lb,BorderLayout.CENTER);
-				}
-				
-				ClientStart.getClient().getFrame().setRightPanel(pan);	
-				
-				//Set current server
-				//Find server at root of selected node
-				Node current = n;
-				
-				do{
-					if(current instanceof Server){
-						currentServer = (Server)current;
-						break;
-					}
-					
-					current = current.getParent();
-					
-					if(current == null){
-						currentServer = null;
-						break;
-					}	
-					
-				}while(current != null);			
-			}
-			
-		});
+		tc.addNodeEventListner(new NodeListener());
 		
 		//Split panels
 		rightPanel = new JPanel(new GridLayout(0,1));
@@ -111,6 +66,52 @@ public class Frame extends JFrame{
 		
 		add(split);
 		setJMenuBar(new MenuBar(this));
+	}
+	
+	class NodeListener implements NodeEventListener{
+		
+		@Override
+		public void nodeRightClicked(String text, NodeEvent event) {
+			//Do nothing
+		}
+
+		@Override
+		public void nodeLeftClicked(NodeEvent nodeEvent) {
+			
+			Node n = nodeEvent.getNode();
+			
+			JComponent pan = ((ComponentNode)n).getComponent();
+			 
+			if(pan == null){
+				pan = new JPanel(new BorderLayout());
+				 
+				JLabel lb = new JLabel(n.toString());
+				lb.setHorizontalAlignment(SwingConstants.CENTER);
+				 
+				pan.add(lb,BorderLayout.CENTER);
+			}
+			
+			ClientStart.getClient().getFrame().setRightPanel(pan);	
+			
+			//Set current server
+			//Find server at root of selected node
+			Node current = n;
+			
+			do{
+				if(current instanceof Server){
+					currentServer = (Server)current;
+					break;
+				}
+				
+				current = current.getParent();
+				
+				if(current == null){
+					currentServer = null;
+					break;
+				}	
+				
+			}while(current != null);
+		}
 	}
 	
 	public Server getCurrentServer(){

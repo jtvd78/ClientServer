@@ -2,7 +2,7 @@ package shared.file;
 
 import java.io.Serializable;
 
-import com.hoosteen.graphics.table.TableData;
+import com.hoosteen.ui.table.TableData;
 
 public class FileData implements TableData, Serializable{
 	
