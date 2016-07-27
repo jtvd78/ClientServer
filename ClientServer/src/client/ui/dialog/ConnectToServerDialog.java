@@ -20,9 +20,9 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import client.ClientStart;
-import client.Server;
 import client.ServerSettings;
-import client.ui.Frame;
+import client.ui.ClientFrame;
+import client.ui.node.Server;
 
 public class ConnectToServerDialog extends JDialog{
 	
@@ -124,7 +124,7 @@ public class ConnectToServerDialog extends JDialog{
 			address = new JTextField("localhost");
 			login = new JTextField("User");
 			password = new JTextField("Password");	
-			port = new JTextField(client.settings.Settings.defaultPort + "");
+			port = new JTextField(shared.Settings.defaultPort + "");
 			
 			left.add(new JLabel("Name:"));
 			right.add(name);

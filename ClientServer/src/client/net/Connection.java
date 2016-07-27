@@ -8,7 +8,7 @@ import java.net.SocketException;
 
 import javax.net.ssl.SSLSocket;
 
-import client.Server;
+import client.ui.node.Server;
 import shared.net.Message;
 
 public class Connection {

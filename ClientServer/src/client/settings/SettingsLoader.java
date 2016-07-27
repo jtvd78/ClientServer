@@ -13,7 +13,7 @@ import java.io.ObjectOutputStream;
 public class SettingsLoader {
 	
 	File settingsFile;
-	String settingsPath = System.getProperty("user.home") + File.separator + "." + client.res.Strings.programName + File.separator + client.res.Strings.version + File.separator;
+	String settingsPath = System.getProperty("user.home") + File.separator + "." + client.settings.Settings.programName + File.separator + shared.Settings.version + File.separator;
 
 	public Settings loadSettings() {
 		settingsFile = new File(settingsPath + "Settings.dat");

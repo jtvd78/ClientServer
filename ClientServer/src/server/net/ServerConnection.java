@@ -8,8 +8,8 @@ import java.net.SocketException;
 
 import javax.net.ssl.SSLSocket;
 
-import client.Server;
-import client.User;
+import client.ui.node.Server;
+import client.ui.node.User;
 import server.ServerStart;
 import server.ServerUser;
 import server.ui.Console;

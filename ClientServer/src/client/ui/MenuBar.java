@@ -9,14 +9,14 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
 import client.ClientStart;
-import client.Server;
+import client.SavedServers;
 import client.ServerSettings;
-import client.res.SavedServers;
 import client.ui.dialog.ConnectToServerDialog;
+import client.ui.node.Server;
 
 class MenuBar extends JMenuBar{
 	
-	Frame frame;
+	ClientFrame frame;
 	
 	JMenu file, saved, edit, server, help;
 	
@@ -26,7 +26,7 @@ class MenuBar extends JMenuBar{
 	JMenuItem disconnect;
 	JMenuItem about;
 	
-	public MenuBar(Frame frame){
+	public MenuBar(ClientFrame frame){
 		this.frame = frame;
 		
 		
@@ -162,7 +162,7 @@ class MenuBar extends JMenuBar{
 		}
 
 		public void actionPerformed(ActionEvent arg0) {
-			JOptionPane.showMessageDialog(frame,"Made by Hoosteen\nVersion " + client.res.Strings.version);
+			JOptionPane.showMessageDialog(frame,"Made by Hoosteen\nVersion " + shared.Settings.version);
 		}
 		
 	}

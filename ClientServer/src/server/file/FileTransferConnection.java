@@ -2,7 +2,7 @@ package server.file;
 
 import java.net.Socket;
 
-import client.Server;
+import client.ui.node.Server;
 
 public class FileTransferConnection {
 	

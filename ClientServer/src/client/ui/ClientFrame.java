@@ -21,11 +21,11 @@ import com.hoosteen.tree.NodeEventListener;
 import com.hoosteen.tree.TreeComp;
 
 import client.ClientStart;
-import client.Server;
-import client.User;
 import client.ui.node.BaseNode;
+import client.ui.node.Server;
+import client.ui.node.User;
 
-public class Frame extends JFrame{
+public class ClientFrame extends JFrame{
 	
 	BaseNode data;	
 	
@@ -33,12 +33,14 @@ public class Frame extends JFrame{
 	JPanel rightPanel;
 	
 	Server currentServer;
+	
+	TreeComp tc;
 
-	public Frame(){
+	public ClientFrame(){
 		
 		init();
 		
-		setTitle(client.res.Strings.programName);
+		setTitle(client.settings.Settings.programName);
 		setSize(800,600);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
@@ -52,7 +54,7 @@ public class Frame extends JFrame{
 		
 		
 		data = new BaseNode();
-		TreeComp tc = new TreeComp(this,data);
+		tc = new TreeComp(this,data);
 		tc.allowNodeRemoval(false);
 		
 		tc.addNodeEventListner(new NodeListener());
@@ -116,6 +118,10 @@ public class Frame extends JFrame{
 	
 	public Server getCurrentServer(){
 		return currentServer;
+	}
+	
+	public TreeComp getTreeComp(){
+		return tc;
 	}
 	
 	public void setRightPanel(JComponent p){

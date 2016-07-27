@@ -21,8 +21,8 @@ import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManagerFactory;
 
-import client.Server;
-import client.User;
+import client.ui.node.Server;
+import client.ui.node.User;
 import server.ui.Console;
 
 public  class ConnectionController{
@@ -64,7 +64,7 @@ public  class ConnectionController{
 			    sslFactory = ctx.getServerSocketFactory();
 			    ss	= (SSLServerSocket) sslFactory.createServerSocket(res.Settings.port);
 			    */
-				ss	= new ServerSocket(client.Settings.port);
+				ss	= new ServerSocket(shared.Settings.defaultPort);
 				
 				
 				
@@ -93,7 +93,7 @@ public  class ConnectionController{
 				ss.close();
 				
 			}catch (BindException e) {
-				Console.out.println("There is already a program using this port (" + client.Settings.port + "). The server could not be started");
+				Console.out.println("There is already a program using this port (" + shared.Settings.defaultPort + "). The server could not be started");
 				e.printStackTrace(Console.out.getPrintStream());
 			} catch (IOException e) {
 				Console.out.println("There was an error when initiating the server.");

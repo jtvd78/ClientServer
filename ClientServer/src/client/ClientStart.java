@@ -4,12 +4,13 @@ import java.util.Set;
 
 import client.settings.Settings;
 import client.settings.SettingsLoader;
-import client.ui.Frame;
+import client.ui.ClientFrame;
+import client.ui.node.Server;
 
 
 public class ClientStart {
 
-	Frame frame;
+	ClientFrame frame;
 	Settings settings;
 	private static ClientStart mainClient;
 	
@@ -30,14 +31,14 @@ public class ClientStart {
 		settings = new SettingsLoader().loadSettings();
 		
 		//UI
-		frame = new Frame();
+		frame = new ClientFrame();
 	}
 	
 	public Settings getSettings(){
 		return settings;
 	}
 
-	public Frame getFrame(){
+	public ClientFrame getFrame(){
 		return frame;
 	}
 	

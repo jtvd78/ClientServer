@@ -14,8 +14,13 @@ import client.ClientStart;
 
 
 public class Settings implements Serializable{
+	
+	public static final int WIDTH = 800;
+	public static final int HEIGHT = 600;
+	
+	public static final String programName = "JVDX";
 
-	public static final int defaultPort = 31415;
+	
 	public static SettingsWindow settingsWindow;
 	
 	public String name;	
@@ -49,7 +54,7 @@ public class Settings implements Serializable{
 		return s;
 	}
 	
-	public String requestName(){		
+	public String requestName(){
 		JPanel jp = new JPanel(new GridLayout(1,2));
 		JLabel jl = new JLabel("Enter your nickname");
 		JTextField jtf = new JTextField(randomName());

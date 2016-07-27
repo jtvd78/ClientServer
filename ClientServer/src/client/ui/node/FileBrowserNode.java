@@ -4,7 +4,6 @@ import javax.swing.JComponent;
 
 import com.hoosteen.tree.ComponentNode;
 
-import client.Server;
 import client.ui.FileBrowser;
 
 public class FileBrowserNode extends ComponentNode{

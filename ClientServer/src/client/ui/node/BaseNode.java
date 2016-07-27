@@ -3,9 +3,6 @@ package client.ui.node;
 import java.util.List;
 import java.util.Set;
 
-import client.Server;
-import client.User;
-
 public class BaseNode extends com.hoosteen.tree.Node{	
 	
 	ServerManager servers;

@@ -36,7 +36,7 @@ public class ServerStart {
 		loginManager = new LoginManager();
 		
 		//Init FileHandler
-		fileHandler = new FileHandler(client.Settings.fileRoot);
+		fileHandler = new FileHandler(server.settings.Settings.fileRoot);
 		
 		//Start ConnectionController
 		ConnectionController cc = new ConnectionController();
@@ -45,12 +45,12 @@ public class ServerStart {
 	
 	public boolean login(ServerUser u, String username, String password, String version, int ID){
 		
-		if(!version.equals(client.Settings.version)){
+		if(!version.equals(shared.Settings.version)){
 			Hashtable<Integer, String> ht = new Hashtable<Integer, String>();
-			ht.put(0, client.Settings.version);
+			ht.put(0, shared.Settings.version);
 			
 			Message m = new Message(Message.Type.INCORRECT_VERSION);
-			m.put(client.Settings.version);
+			m.put(shared.Settings.version);
 			m.setID(ID);
 			
 			u.sendMessage(m);

@@ -13,7 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import client.ClientStart;
-import client.Server;
+import client.ui.node.Server;
 import shared.net.Message;
 
 public class SettingsWindow extends JDialog{

@@ -4,11 +4,13 @@ import javax.swing.JComponent;
 
 import com.hoosteen.tree.ComponentNode;
 import com.hoosteen.tree.Node;
+import com.hoosteen.ui.table.TableActionListener;
 import com.hoosteen.ui.table.TableComp;
 import com.hoosteen.ui.table.TableData;
 import com.hoosteen.ui.table.TableDataSource;
 
-import client.User;
+import client.ClientStart;
+import client.ui.ClientFrame;
 
 public class UserManager extends ComponentNode{
 	
@@ -40,8 +42,31 @@ public class UserManager extends ComponentNode{
 
 		public UsersComp() {
 			super(new UserDataSource());
+			this.addTableActionListener(new UserTableActionListener());
 		}
 		
+	}
+	
+	class UserTableActionListener implements TableActionListener{
+
+		@Override
+		public void rowSelected(int row, TableData data) {}
+
+		@Override
+		public void rowDoubleClicked(int row, TableData data) {			
+			
+			User u = (User) UserManager.this.getNode(row);
+			
+			ClientFrame f = ClientStart.getClient().getFrame();
+			
+			f.getTreeComp().nodeLeftClicked(u);			
+			
+		}
+
+		@Override
+		public void rowRightClicked(int row, TableData data) {
+			
+		}
 	}
 	
 	class UserDataSource implements TableDataSource<UserData>{

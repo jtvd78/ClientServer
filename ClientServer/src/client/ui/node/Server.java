@@ -1,4 +1,4 @@
-package client;
+package client.ui.node;
 
 import java.awt.event.ActionEvent;
 import java.io.IOException;
@@ -13,9 +13,9 @@ import javax.swing.JMenuItem;
 import com.hoosteen.tree.ComponentNode;
 import com.hoosteen.ui.ChatPanel;
 
+import client.ClientStart;
+import client.ServerSettings;
 import client.net.Connection;
-import client.ui.node.FileBrowserNode;
-import client.ui.node.UserManager;
 import shared.net.Message;
 
 
@@ -80,7 +80,7 @@ public class Server extends ComponentNode{
 		m.put(ClientStart.getClient().getSettings().name);
 		m.put(ss.login);
 		m.put(ss.password);
-		m.put(client.res.Strings.version);
+		m.put(shared.Settings.version);
 		
 		c.sendMessage(m);
 		m.waitForResponse();

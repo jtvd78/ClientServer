@@ -23,6 +23,9 @@ public class ServerMessageHandler {
 	
 	public void handleMessage(Message m){
 		Console.out.println(m.type.toString());
+		
+		
+		
 		switch(m.type){
 		
 		case LOGIN:	u = c.createUser((String)m.get(0));
@@ -35,6 +38,7 @@ public class ServerMessageHandler {
 					break;
 		case PM:	
 					Message send= new Message(Message.Type.PM);
+					send.setID(m.getID());
 					send.put(m.get(0));
 					send.put(u.uID);
 					s.sendPMToClient(send,(int)m.get(1));

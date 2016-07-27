@@ -1,9 +1,11 @@
-package client;
+package client.ui.node;
 
 import javax.swing.JComponent;
 
 import com.hoosteen.tree.ComponentNode;
 import com.hoosteen.ui.ChatPanel;
+
+import client.ClientStart;
 
 public class User extends ComponentNode{
 	

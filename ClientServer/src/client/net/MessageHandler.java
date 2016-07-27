@@ -3,8 +3,8 @@ package client.net;
 import java.util.ArrayList;
 
 import client.ClientStart;
-import client.Server;
-import client.User;
+import client.ui.node.Server;
+import client.ui.node.User;
 import shared.net.Message;
 
 public class MessageHandler {
@@ -60,8 +60,11 @@ public class MessageHandler {
 		}
 	}
 
-	public int getNextID() {
+	public int getNextID() {		
 		ID++;
+		
+		System.out.println(ID);
+		
 		return ID;
 	}
 }

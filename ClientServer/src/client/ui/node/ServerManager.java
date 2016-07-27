@@ -8,11 +8,13 @@ import javax.swing.JComponent;
 
 import com.hoosteen.tree.ComponentNode;
 import com.hoosteen.tree.Node;
+import com.hoosteen.ui.table.TableActionListener;
 import com.hoosteen.ui.table.TableComp;
 import com.hoosteen.ui.table.TableData;
 import com.hoosteen.ui.table.TableDataSource;
 
-import client.Server;
+import client.ClientStart;
+import client.ui.ClientFrame;
 
 public class ServerManager extends ComponentNode{
 	
@@ -42,9 +44,33 @@ public class ServerManager extends ComponentNode{
 		
 		public ServersComp() {
 			super(new ServerDataSource());
+			this.addTableActionListener(new ServerTableActionListener());
 		}
 		
 		
+		
+	}
+	
+	class ServerTableActionListener implements TableActionListener{
+
+		@Override
+		public void rowSelected(int row, TableData data) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void rowDoubleClicked(int row, TableData data) {
+			Server s = (Server) ServerManager.this.getNode(row);
+			ClientFrame f = ClientStart.getClient().getFrame();
+			f.getTreeComp().nodeLeftClicked(s);
+		}
+
+		@Override
+		public void rowRightClicked(int row, TableData data) {
+			// TODO Auto-generated method stub
+			
+		}
 		
 	}
 	

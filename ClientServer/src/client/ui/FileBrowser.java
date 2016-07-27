@@ -14,8 +14,8 @@ import com.hoosteen.ui.table.TableComp;
 import com.hoosteen.ui.table.TableData;
 import com.hoosteen.ui.table.TableDataSource;
 
-import client.Server;
 import client.net.Connection;
+import client.ui.node.Server;
 import shared.file.FileData;
 import shared.file.FilePath;
 import shared.net.Message;

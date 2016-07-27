@@ -19,20 +19,6 @@ public class ServerSettings implements Serializable{
 	public String login;
 	public String password;
 	
-	/*
-	public ServerSettings(String address, String login, String password){
-		this(address,login,password, res.Settings.defaultPort,"New Server");
-	}
-	
-	public ServerSettings(String address, String login, String password, String name){
-		this(address,login,password, res.Settings.defaultPort,name);
-	}
-
-	public ServerSettings(String address, String login, String password, int port){
-		this(address,login,password, port,"New Server");
-	}
-	*/
-	
 	public ServerSettings(String address, String login, String password, int port, String name){
 		this.address = address;
 		this.login = login;

@@ -1,4 +1,4 @@
-package client.res;
+package client;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -9,12 +9,10 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
-import client.ServerSettings;
-
 public class SavedServers {
 	
 	private File serversFile;
-	private String filepath = System.getProperty("user.home") + File.separator + "." + client.res.Strings.programName + File.separator + client.res.Strings.version + File.separator;
+	private String filepath = System.getProperty("user.home") + File.separator + "." + client.settings.Settings.programName + File.separator + shared.Settings.version + File.separator;
 	
 	private ArrayList<ServerSettings> savedServers;
 	
