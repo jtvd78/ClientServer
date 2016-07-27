@@ -1,11 +1,6 @@
 package client.ui;
 
 import java.awt.BorderLayout;
-import java.awt.Point;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
-import java.io.File;
-import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
@@ -14,11 +9,11 @@ import com.hoosteen.ui.table.TableComp;
 import com.hoosteen.ui.table.TableData;
 import com.hoosteen.ui.table.TableDataSource;
 
-import client.net.Connection;
 import client.ui.node.Server;
 import shared.file.FileData;
 import shared.file.FilePath;
-import shared.net.Message;
+import shared.net.request.FileListRequest;
+import shared.net.response.FileListResponse;
 
 public class FileBrowser extends JPanel implements TableDataSource<FileData>{
 	
@@ -45,15 +40,14 @@ public class FileBrowser extends JPanel implements TableDataSource<FileData>{
 	@Override
 	public FileData[] getData() {
 		
-		Message m = new Message(Message.Type.GET_FILELIST);		
-		m.put(path.toString());
-		server.sendMessage(m);
-		m.waitForResponse();
+		FileListRequest request = new FileListRequest(path.toString());
+		server.sendMessage(request);
+		request.waitForResponse();
 		
-		System.out.println(m.getResponse().get(0));
+		FileListResponse response = (FileListResponse) request.getResponse();
 		
 		
-		fileData = (FileData[])m.getResponse().get(1);	
+		fileData = response.getFileList();
 		
 		return fileData;		
 	}

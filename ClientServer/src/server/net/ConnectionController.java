@@ -83,11 +83,10 @@ public  class ConnectionController{
 				while(running){
 					Socket sock = ss.accept();
 					
-					connectionCounter++;
-					
-					ServerConnection c = new ServerConnection(sock,connectionCounter);
-					c.start();
+					ServerConnection c = new ServerConnection(sock,++connectionCounter);
 					connectionList.add(c);
+					c.start();
+					
 				}
 				
 				ss.close();
@@ -104,5 +103,9 @@ public  class ConnectionController{
 		public void stop(){
 			running = false;
 		}
+	}
+
+	public void connectionClosed(ServerConnection serverConnection) {
+		connectionList.remove(serverConnection);
 	}
 }

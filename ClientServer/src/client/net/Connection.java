@@ -9,7 +9,9 @@ import java.net.SocketException;
 import javax.net.ssl.SSLSocket;
 
 import client.ui.node.Server;
-import shared.net.Message;
+import shared.net.request.LoginRequest;
+import shared.net.request.MessageRequest;
+import shared.net.response.MessageResponse;
 
 public class Connection {
 	
@@ -28,31 +30,13 @@ public class Connection {
 		new Thread(new RequestListener()).start();
 	}
 
-	public void sendMessage(Message m){
+	public void sendMessage(MessageRequest request){
 		
-		switch(m.type){
-		case ADD_USER:
-		case CORRECT_LP:
-		case GET_FILELIST:
-		case INCORRECT_LP:
-		case INCORRECT_VERSION:
-		case LOGIN:
-		case PM:
-		case REMOVE_USER:
-		case SEND_FILELIST: m.setID(messageHandler.getNextID());
-							messageHandler.addPendingMessage(m);
-			break;
-			
-			
-		case CHAT:
-			break;
-		default:
-			break;
-		}
-		
+		request.setID(messageHandler.getNextID());
+		messageHandler.addPendingMessage(request);		
 		
 		try {
-			oos.writeObject(m);
+			oos.writeObject(request);
 			oos.flush();
 		}catch(SocketException e){ 
 			//Socket Closed
@@ -76,8 +60,8 @@ public class Connection {
 		}
 	}
 	
-	private void handleMessage(Message m){
-		messageHandler.handleMessage(m);
+	private void handleMessage(MessageResponse response){
+		messageHandler.handleMessage(response);
 	}
 	
 	private class RequestListener implements Runnable{
@@ -90,7 +74,7 @@ public class Connection {
 				ois = new ObjectInputStream(socket.getInputStream()); 
 				
 				while(connected){
-					Message m = (Message)ois.readObject();
+					MessageResponse m = (MessageResponse)ois.readObject();
 					handleMessage(m);
 				}
 				

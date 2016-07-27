@@ -1,6 +1,7 @@
 package server;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Hashtable;
 
 import javax.swing.UIManager;
@@ -8,17 +9,23 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 import server.file.FileHandler;
 import server.net.ConnectionController;
+import server.net.ServerConnection;
 import server.ui.Console;
-import shared.net.Message;
+import shared.net.response.ChatResponse;
+import shared.net.response.PMResponse;
+import shared.net.response.UpdateNameResponse;
 
 public class ServerStart {
 	
 	FileHandler fileHandler;
 	LoginManager loginManager;
+	ConnectionController connectionController;
 	
 	public static ServerStart mainServer;
 	
 	private ArrayList<ServerUser> userList = new ArrayList<ServerUser>();
+	
+	private HashMap<ServerConnection, ServerUser> userConnectionMap = new HashMap<ServerConnection, ServerUser>();
 	
 	public static void main(String[] args){
 		new ServerStart().start();
@@ -39,53 +46,13 @@ public class ServerStart {
 		fileHandler = new FileHandler(server.settings.Settings.fileRoot);
 		
 		//Start ConnectionController
-		ConnectionController cc = new ConnectionController();
-		cc.init();
+		connectionController = new ConnectionController();
+		connectionController.init();
 	}
 	
-	public boolean login(ServerUser u, String username, String password, String version, int ID){
+	public boolean login(ServerUser u, String username, String password){
 		
-		if(!version.equals(shared.Settings.version)){
-			Hashtable<Integer, String> ht = new Hashtable<Integer, String>();
-			ht.put(0, shared.Settings.version);
-			
-			Message m = new Message(Message.Type.INCORRECT_VERSION);
-			m.put(shared.Settings.version);
-			m.setID(ID);
-			
-			u.sendMessage(m);
-			return false;
-		}
-		
-		boolean result = loginManager.login(u, username, password);
-		
-		if(result){	
-			
-			//Add Existing users
-			for(ServerUser uu : userList){
-				u.addUser(uu);
-			}
-			
-			userList.add(u);
-			
-			for(ServerUser uu : userList){
-				uu.addUser(u);
-			}
-			
-						
-			
-			Console.out.println(u.getName() + " connected to the server");
-			
-			Message m = new Message(Message.Type.CORRECT_LP);
-			m.setID(ID);
-			u.sendMessage(m);
-		}else{
-			Message m = new Message(Message.Type.INCORRECT_LP);
-			m.setID(ID);
-			u.sendMessage(m);
-		}
-		
-		return result;
+		return loginManager.login(u, username, password);
 	}
 
 	public synchronized void removeUser(ServerUser u) {
@@ -98,31 +65,48 @@ public class ServerStart {
 		Console.out.println(u.getName() + " left the server");
 	}
 	
-	public void sendChatToClients(Message m){		
+	public void sendChatToClients(ChatResponse response){		
 		for(ServerUser u : userList){
-			u.sendMessage(m);
+			u.sendMessage(response);
 		}
 	}
 	
-	public void updateUserName(String name, int uID){
-		Message m = new Message(Message.Type.UPDATE_NAME);
-		m.put(name);
-		m.put(uID);
-		
+	public void updateUserName(UpdateNameResponse response){		
 		for(ServerUser uu : userList){
-			uu.sendMessage(m);
+			uu.sendMessage(response);
 		}
 	}
 	
-	public void sendPMToClient(Message m, int uID){
+	public void sendPMToClient(PMResponse response, int uID){
 		for(ServerUser u : userList){
 			if(u.uID == uID){
-				u.sendMessage(m);
+				u.sendMessage(response);
 			}
 		}
 	}
 
 	public FileHandler getFileHandler() {
 		return fileHandler;
+	}	
+
+	public void connectionClosed(ServerConnection serverConnection) {
+		connectionController.connectionClosed(serverConnection);
+		ServerUser user = userConnectionMap.remove(serverConnection);
+		removeUser(user);
 	}
+
+	public void userConnected(ServerUser u, ServerConnection c) {
+		userConnectionMap.put(c, u);
+		
+		//Add Existing users
+		for(ServerUser uu : userList){
+			u.addUser(uu);
+		}
+		
+		userList.add(u);
+		
+		for(ServerUser uu : userList){
+			uu.addUser(u);
+		}
+	}	
 }

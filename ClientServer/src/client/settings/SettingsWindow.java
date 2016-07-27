@@ -14,7 +14,8 @@ import javax.swing.JTextField;
 
 import client.ClientStart;
 import client.ui.node.Server;
-import shared.net.Message;
+import shared.net.request.MessageRequest;
+import shared.net.request.UpdateNameRequest;
 
 public class SettingsWindow extends JDialog{
 	
@@ -82,11 +83,10 @@ public class SettingsWindow extends JDialog{
 		public void actionPerformed(ActionEvent e) {
 			ClientStart.getClient().getSettings().name = sp.name.getText();
 			
-			Message m = new Message(Message.Type.UPDATE_NAME);
-			m.put(ClientStart.getClient().getSettings().name);
+			MessageRequest req = new UpdateNameRequest(ClientStart.getClient().getSettings().name);
 			
 			for(Server s : ClientStart.getClient().getServerList()){
-				s.sendMessage(m);
+				s.sendMessage(req);
 			}
 			
 			dispose();

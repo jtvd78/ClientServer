@@ -16,7 +16,11 @@ import com.hoosteen.ui.ChatPanel;
 import client.ClientStart;
 import client.ServerSettings;
 import client.net.Connection;
-import shared.net.Message;
+import shared.net.request.ChatRequest;
+import shared.net.request.LoginRequest;
+import shared.net.request.MessageRequest;
+import shared.net.request.PMRequest;
+import shared.net.response.LoginResponse;
 
 
 public class Server extends ComponentNode{
@@ -71,49 +75,36 @@ public class Server extends ComponentNode{
 		c = new Connection(socket,this);	
 		c.start();
 		
+		LoginRequest request = new LoginRequest(ClientStart.getClient().getSettings().name, ss.login, ss.password, shared.Settings.version);
+		c.sendMessage(request);		
+		request.waitForResponse();
 		
-		System.out.println("Connecting to " + ss.name + " at " + ss.address + " on port " + ss.port + " with the username " + ss.login + " and the password " + ss.password);
-		
-		
-		//Login		
-		Message m = new Message(Message.Type.LOGIN);
-		m.put(ClientStart.getClient().getSettings().name);
-		m.put(ss.login);
-		m.put(ss.password);
-		m.put(shared.Settings.version);
-		
-		c.sendMessage(m);
-		m.waitForResponse();
-		
-		Message re = m.getResponse();
-		System.out.println(re);
+		LoginResponse re = (LoginResponse) request.getResponse();
 		
 		
 		//Update the contents of the File Browser
 		file.dataChanged();
 		
 		
-		if(re.type == Message.Type.CORRECT_LP){
+		if(re.getType() == LoginResponse.Type.SUCCESS){
 			System.out.println("Correct LP");
-		}else if(re.type == Message.Type.INCORRECT_LP){
+		}else if(re.getType() == LoginResponse.Type.INCORRECT_LP){
 			System.out.println("Incorrent LP");
-		}else if(re.type == Message.Type.INCORRECT_VERSION){
+		}else if(re.getType() == LoginResponse.Type.INCORRECT_VERSION){
 			System.out.println("Incorrect Version");
 		}
 	}
 	
-	public void sendChat(String s){
-		Message m = new Message(Message.Type.CHAT);
-		m.put(s);
-		m.put(ClientStart.getClient().getSettings().name);
-		c.sendMessage(m);
+	public void sendChat(String message){
+		
+		ChatRequest chat = new ChatRequest(message);
+		c.sendMessage(chat);
 	}
 	
 	public void sendPM(String str, int uID) {
-		Message m = new Message(Message.Type.PM);
-		m.put(str);
-		m.put(uID);
-		c.sendMessage(m);
+		
+		MessageRequest pmRequest = new PMRequest(uID, str);
+		c.sendMessage(pmRequest);	
 	}
 	
 	public void receivePM(String message, int fromUID) {
@@ -132,7 +123,10 @@ public class Server extends ComponentNode{
 		return ss.name;
 	}
 	
-	public void receiveChat(String fromName, String message) {
+	public void receiveChat(String message, int fromUID) {
+		
+		String fromName = users.getUser(fromUID).getName();
+		
 		panel.receiveChat(fromName, message);
 	}
 	
@@ -155,7 +149,7 @@ public class Server extends ComponentNode{
 		}
 	}
 
-	public void sendMessage(Message m) {
+	public void sendMessage(MessageRequest m) {
 		c.sendMessage(m);
 	}
 

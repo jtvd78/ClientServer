@@ -13,17 +13,18 @@ import client.ui.node.User;
 import server.ServerStart;
 import server.ServerUser;
 import server.ui.Console;
-import shared.net.Message;
+import shared.net.request.MessageRequest;
+import shared.net.response.MessageResponse;
 
 public class ServerConnection{
 	
 	Socket socket;
+	int connectionNumber;
 	ObjectOutputStream oos;
 	boolean connected = true;
 	ServerMessageHandler messageHandler;
-		
-	ServerUser u; //Client
-	int connectionNumber;
+	
+	
 
 	public ServerConnection(Socket sock, int connectionNumber) throws IOException{
 		this.messageHandler = new ServerMessageHandler(this);
@@ -36,10 +37,10 @@ public class ServerConnection{
 		new Thread(new RequestListener()).start();
 	}
 	
-	public void sendMessage(Message m){
+	public void sendMessage(MessageResponse response){
 		
 		try {
-			oos.writeObject(m);
+			oos.writeObject(response);
 			oos.flush();
 		}catch(SocketException e){ 
 			//Client Closed
@@ -52,7 +53,7 @@ public class ServerConnection{
 	
 	public void close(){
 		connected = false;
-		ServerStart.mainServer.removeUser(u);
+		ServerStart.mainServer.connectionClosed(this);
 		try {
 			oos.close();
 			socket.close();
@@ -61,7 +62,7 @@ public class ServerConnection{
 		}
 	}	
 	
-	private void handleMessage(Message m){
+	private void handleMessage(MessageRequest m){
 		messageHandler.handleMessage(m);
 	}
 	
@@ -75,7 +76,7 @@ public class ServerConnection{
 				ois = new ObjectInputStream(socket.getInputStream()); 
 				
 				while(connected){
-					Message m = (Message)ois.readObject();
+					MessageRequest m = (MessageRequest)ois.readObject();
 					handleMessage(m);
 				}
 				
@@ -96,7 +97,7 @@ public class ServerConnection{
 		}
 	}
 
-	public ServerUser createUser(String name) {
-		return (u = new ServerUser(name, this,connectionNumber));
-	}	
+	public int getConnectionNumber() {
+		return connectionNumber;
+	}
 }
