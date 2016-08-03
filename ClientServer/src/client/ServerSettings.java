@@ -11,7 +11,6 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 public class ServerSettings implements Serializable{
-	private static final long serialVersionUID = -3376609133416416194L;
 	
 	public int port;
 	public String address;

@@ -1,4 +1,4 @@
-package server.settings;
+package server;
 
 public class Settings {
 	

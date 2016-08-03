@@ -1,8 +1,8 @@
 package server;
 
 import server.net.ServerConnection;
+import shared.net.MessageResponse;
 import shared.net.response.AddUserResponse;
-import shared.net.response.MessageResponse;
 import shared.net.response.RemoveUserResponse;
 
 public class ServerUser {

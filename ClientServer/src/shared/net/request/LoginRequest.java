@@ -4,8 +4,9 @@ import server.ServerStart;
 import server.ServerUser;
 import server.net.ServerMessageHandler;
 import server.ui.Console;
+import shared.net.MessageRequest;
+import shared.net.MessageResponse;
 import shared.net.response.LoginResponse;
-import shared.net.response.MessageResponse;
 
 public class LoginRequest extends MessageRequest{
 	

@@ -43,7 +43,7 @@ public class ServerStart {
 		loginManager = new LoginManager();
 		
 		//Init FileHandler
-		fileHandler = new FileHandler(server.settings.Settings.fileRoot);
+		fileHandler = new FileHandler(server.Settings.fileRoot);
 		
 		//Start ConnectionController
 		connectionController = new ConnectionController();

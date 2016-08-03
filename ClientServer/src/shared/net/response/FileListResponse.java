@@ -2,6 +2,7 @@ package shared.net.response;
 
 import client.ui.node.Server;
 import shared.file.FileData;
+import shared.net.MessageResponse;
 
 public class FileListResponse extends MessageResponse {
 	

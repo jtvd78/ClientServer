@@ -1,5 +1,7 @@
 package client.ui.dialog;
 
-public class NewServerDialog {
+import javax.swing.JDialog;
+
+public class NewServerDialog extends JDialog{
 
 }

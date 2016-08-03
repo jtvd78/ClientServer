@@ -79,7 +79,9 @@ public class SavedServers {
 
 	void saveServers() {
 		try {
-			new ObjectOutputStream(new FileOutputStream(serversFile)).writeObject(savedServers);
+			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(serversFile));
+			oos.writeObject(savedServers);
+			oos.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {

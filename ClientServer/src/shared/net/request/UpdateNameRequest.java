@@ -3,7 +3,8 @@ package shared.net.request;
 import server.ServerStart;
 import server.ServerUser;
 import server.net.ServerMessageHandler;
-import shared.net.response.MessageResponse;
+import shared.net.MessageRequest;
+import shared.net.MessageResponse;
 import shared.net.response.UpdateNameResponse;
 
 public class UpdateNameRequest extends MessageRequest{

@@ -2,7 +2,8 @@ package shared.net.request;
 
 import server.ServerStart;
 import server.net.ServerMessageHandler;
-import shared.net.response.MessageResponse;
+import shared.net.MessageRequest;
+import shared.net.MessageResponse;
 import shared.net.response.PMResponse;
 
 public class PMRequest extends MessageRequest{

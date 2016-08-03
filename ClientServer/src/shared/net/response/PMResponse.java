@@ -3,6 +3,7 @@ package shared.net.response;
 import client.ClientStart;
 import client.ui.node.Server;
 import shared.net.AbstractMessage;
+import shared.net.MessageResponse;
 
 public class PMResponse extends MessageResponse{
 	

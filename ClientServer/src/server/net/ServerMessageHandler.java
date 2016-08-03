@@ -1,8 +1,8 @@
 package server.net;
 
 import server.ServerUser;
-import shared.net.request.MessageRequest;
-import shared.net.response.MessageResponse;
+import shared.net.MessageRequest;
+import shared.net.MessageResponse;
 
 public class ServerMessageHandler {
 	

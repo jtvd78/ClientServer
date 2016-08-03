@@ -6,15 +6,10 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.SocketException;
 
-import javax.net.ssl.SSLSocket;
-
-import client.ui.node.Server;
-import client.ui.node.User;
 import server.ServerStart;
-import server.ServerUser;
 import server.ui.Console;
-import shared.net.request.MessageRequest;
-import shared.net.response.MessageResponse;
+import shared.net.MessageRequest;
+import shared.net.MessageResponse;
 
 public class ServerConnection{
 	

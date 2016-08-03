@@ -1,6 +1,7 @@
 package shared.net.response;
 
 import client.ui.node.Server;
+import shared.net.MessageResponse;
 
 public class RemoveUserResponse extends MessageResponse{
 	

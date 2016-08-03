@@ -32,6 +32,7 @@ public class ServerManager extends ComponentNode{
 	
 	public void removeServer(Server s){
 		removeNode(s);
+		s.disconnect();
 		comp.dataChanged();
 	}
 	

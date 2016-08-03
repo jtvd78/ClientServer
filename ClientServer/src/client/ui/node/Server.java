@@ -16,9 +16,9 @@ import com.hoosteen.ui.ChatPanel;
 import client.ClientStart;
 import client.ServerSettings;
 import client.net.Connection;
+import shared.net.MessageRequest;
 import shared.net.request.ChatRequest;
 import shared.net.request.LoginRequest;
-import shared.net.request.MessageRequest;
 import shared.net.request.PMRequest;
 import shared.net.response.LoginResponse;
 
@@ -77,9 +77,9 @@ public class Server extends ComponentNode{
 		
 		LoginRequest request = new LoginRequest(ClientStart.getClient().getSettings().name, ss.login, ss.password, shared.Settings.version);
 		c.sendMessage(request);		
-		request.waitForResponse();
 		
-		LoginResponse re = (LoginResponse) request.getResponse();
+		
+		LoginResponse re = (LoginResponse) request.waitForResponse();
 		
 		
 		//Update the contents of the File Browser

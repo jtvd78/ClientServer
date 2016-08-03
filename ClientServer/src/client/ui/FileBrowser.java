@@ -42,9 +42,9 @@ public class FileBrowser extends JPanel implements TableDataSource<FileData>{
 		
 		FileListRequest request = new FileListRequest(path.toString());
 		server.sendMessage(request);
-		request.waitForResponse();
 		
-		FileListResponse response = (FileListResponse) request.getResponse();
+		
+		FileListResponse response = (FileListResponse) request.waitForResponse();
 		
 		
 		fileData = response.getFileList();
@@ -55,36 +55,6 @@ public class FileBrowser extends JPanel implements TableDataSource<FileData>{
 	public void dataChanged(){
 		tc.dataChanged();
 	}
-	
-	/*
-	public class Path {
-
-		private ArrayList<String> pathList = new ArrayList<String>();
-		
-		@Override
-		public String toString(){
-			String s = File.separator;
-			for(String ss : pathList){
-				s += ss;
-				s += File.separator;
-			}
-			return s;
-		}
-		
-		public void goUp(){		
-			try{
-				pathList.remove(pathList.size()-1);
-			}catch(ArrayIndexOutOfBoundsException e){
-				//Do nothing. Reached the root of the path.
-			}
-		}
-		
-		public void add(String s){
-			pathList.add(s);
-		}
-	}
-	
-	*/
 	
 	
 	private class Listener implements TableActionListener{

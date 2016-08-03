@@ -14,7 +14,7 @@ import javax.swing.JTextField;
 
 import client.ClientStart;
 import client.ui.node.Server;
-import shared.net.request.MessageRequest;
+import shared.net.MessageRequest;
 import shared.net.request.UpdateNameRequest;
 
 public class SettingsWindow extends JDialog{

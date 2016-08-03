@@ -2,6 +2,7 @@ package shared.net.response;
 
 import client.ui.node.Server;
 import client.ui.node.User;
+import shared.net.MessageResponse;
 
 public class UpdateNameResponse extends MessageResponse{
 	

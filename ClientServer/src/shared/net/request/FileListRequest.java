@@ -2,8 +2,9 @@ package shared.net.request;
 
 import server.ServerStart;
 import server.net.ServerMessageHandler;
+import shared.net.MessageRequest;
+import shared.net.MessageResponse;
 import shared.net.response.FileListResponse;
-import shared.net.response.MessageResponse;
 
 public class FileListRequest extends MessageRequest{
 	

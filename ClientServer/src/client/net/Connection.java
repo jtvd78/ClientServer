@@ -9,9 +9,9 @@ import java.net.SocketException;
 import javax.net.ssl.SSLSocket;
 
 import client.ui.node.Server;
+import shared.net.MessageRequest;
+import shared.net.MessageResponse;
 import shared.net.request.LoginRequest;
-import shared.net.request.MessageRequest;
-import shared.net.response.MessageResponse;
 
 public class Connection {
 	
