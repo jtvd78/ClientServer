@@ -37,7 +37,7 @@ public class ServerStart {
 		
 		//Setup Console Window
 		Console.init();
-		com.hoosteen.graphics.Tools.setNativeUI();
+		com.hoosteen.Tools.setNativeUI();
 		
 		//Init login manager
 		loginManager = new LoginManager();

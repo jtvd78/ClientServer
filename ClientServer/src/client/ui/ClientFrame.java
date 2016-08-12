@@ -40,7 +40,7 @@ public class ClientFrame extends JFrame{
 		
 		init();
 		
-		setTitle(client.settings.Settings.programName);
+		setTitle(client.settings.ClientSettings.programName);
 		setSize(800,600);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);

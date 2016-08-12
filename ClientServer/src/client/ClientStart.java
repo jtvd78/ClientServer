@@ -2,8 +2,9 @@ package client;
 
 import java.util.Set;
 
-import client.settings.Settings;
-import client.settings.SettingsLoader;
+import com.hoosteen.settings.Settings;
+
+import client.settings.ClientSettings;
 import client.ui.ClientFrame;
 import client.ui.node.Server;
 
@@ -11,13 +12,13 @@ import client.ui.node.Server;
 public class ClientStart {
 
 	ClientFrame frame;
-	Settings settings;
+	ClientSettings settings;
 	private static ClientStart mainClient;
 	
 	public static void main(String[] args){
 		
 		//Make it look nice
-		com.hoosteen.graphics.Tools.setNativeUI();
+		com.hoosteen.Tools.setNativeUI();
 		
 		//Start up the program
 		
@@ -25,16 +26,15 @@ public class ClientStart {
 		mainClient.start();
 	}
 	
-	private void start(){
+	private void start(){	
 		
-		//Init Stuff
-		settings = new SettingsLoader().loadSettings();
+		settings = Settings.loadSettings(ClientSettings.class, ClientSettings.programName, shared.Settings.version);
 		
 		//UI
 		frame = new ClientFrame();
 	}
 	
-	public Settings getSettings(){
+	public ClientSettings getSettings(){
 		return settings;
 	}
 

@@ -9,11 +9,15 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import com.hoosteen.schedule.settings.ScheduleSettings;
+import com.hoosteen.settings.Settings;
+import com.hoosteen.settings.SettingsWindow;
+
 import client.ClientStart;
 
 
 
-public class Settings implements Serializable{
+public class ClientSettings extends Settings<ClientSettingsWindow>{
 	
 	public static final int WIDTH = 800;
 	public static final int HEIGHT = 600;
@@ -21,11 +25,9 @@ public class Settings implements Serializable{
 	public static final String programName = "JVDX";
 
 	
-	public static SettingsWindow settingsWindow;
-	
 	public String name;	
 	
-	public Settings(){
+	public ClientSettings(){
 		name = requestName();
 	}
 	
@@ -39,11 +41,9 @@ public class Settings implements Serializable{
 		int length = 10;
 		for(int c = 0; c < length; c++){
 			
-			int place = ((int)((Math.random())*list.length));
-			boolean chance = true;
-			if(((int) (Math.random()*2)) == 0){
-				chance = false;
-			}
+			int place = (int)(Math.random()*list.length);
+			boolean chance = (int)(Math.random()*2) == 0;
+			
 			char ch = list[place];
 			if (place < 26 && chance){
 				ch = Character.toUpperCase(ch);
@@ -70,14 +70,11 @@ public class Settings implements Serializable{
 		
 		return name;
 	}
+
+	@Override
+	protected ClientSettingsWindow getSettingsWindow(JFrame owner) {
+		return new ClientSettingsWindow(owner, this);
+	}
 	
-	public static void showSettingsWindow(){
 		
-		if(settingsWindow == null){
-			settingsWindow = new SettingsWindow(ClientStart.getClient().getFrame());
-			settingsWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		}
-		
-		settingsWindow.setVisible(true);
-	}	
 }

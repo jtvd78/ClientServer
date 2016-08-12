@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class SavedServers {
 	
 	private File serversFile;
-	private String filepath = System.getProperty("user.home") + File.separator + "." + client.settings.Settings.programName + File.separator + shared.Settings.version + File.separator;
+	private String filepath = System.getProperty("user.home") + File.separator + "." + client.settings.ClientSettings.programName + File.separator + shared.Settings.version + File.separator;
 	
 	private ArrayList<ServerSettings> savedServers;
 	

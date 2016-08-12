@@ -87,7 +87,8 @@ class MenuBar extends JMenuBar{
 		}
 
 		public void actionPerformed(ActionEvent arg0) {
-			client.settings.Settings.showSettingsWindow();
+			
+			ClientStart.getClient().getSettings().showSettingsWindow(frame);
 		}
 	}
 	
