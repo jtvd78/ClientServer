@@ -1,6 +1,6 @@
 package server;
 
-import server.ui.Console;
+import com.hoosteen.ui.Console;
 
 public class LoginManager {
 	

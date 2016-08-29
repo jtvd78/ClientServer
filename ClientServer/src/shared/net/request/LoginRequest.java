@@ -1,9 +1,10 @@
 package shared.net.request;
 
+import com.hoosteen.ui.Console;
+
 import server.ServerStart;
 import server.ServerUser;
 import server.net.ServerMessageHandler;
-import server.ui.Console;
 import shared.net.MessageRequest;
 import shared.net.MessageResponse;
 import shared.net.response.LoginResponse;

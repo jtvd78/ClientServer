@@ -6,8 +6,9 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.SocketException;
 
+import com.hoosteen.ui.Console;
+
 import server.ServerStart;
-import server.ui.Console;
 import shared.net.MessageRequest;
 import shared.net.MessageResponse;
 
@@ -26,9 +27,6 @@ public class ServerConnection{
 		this.connectionNumber = connectionNumber;
 		this.socket = sock;
 		oos = new ObjectOutputStream(sock.getOutputStream());
-	}
-	
-	public void start() {
 		new Thread(new RequestListener()).start();
 	}
 	

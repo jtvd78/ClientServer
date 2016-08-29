@@ -3,7 +3,8 @@ package server.file;
 import java.io.File;
 import java.util.ArrayList;
 
-import server.ui.Console;
+import com.hoosteen.ui.Console;
+
 import shared.file.FileData;
 import shared.file.FilePath;
 

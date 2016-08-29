@@ -64,7 +64,7 @@ public class ServerManager extends ComponentNode{
 		public void rowDoubleClicked(int row, TableData data) {
 			Server s = (Server) ServerManager.this.getNode(row);
 			ClientFrame f = ClientStart.getClient().getFrame();
-			f.getTreeComp().nodeLeftClicked(s);
+			f.getTreeComp().selectNode(s);
 		}
 
 		@Override

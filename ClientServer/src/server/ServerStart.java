@@ -7,10 +7,11 @@ import java.util.Hashtable;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import com.hoosteen.ui.Console;
+
 import server.file.FileHandler;
 import server.net.ConnectionController;
 import server.net.ServerConnection;
-import server.ui.Console;
 import shared.net.response.ChatResponse;
 import shared.net.response.PMResponse;
 import shared.net.response.UpdateNameResponse;

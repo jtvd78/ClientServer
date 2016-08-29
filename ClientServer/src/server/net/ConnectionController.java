@@ -21,9 +21,10 @@ import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManagerFactory;
 
+import com.hoosteen.ui.Console;
+
 import client.ui.node.Server;
 import client.ui.node.User;
-import server.ui.Console;
 
 public  class ConnectionController{
 	boolean running = true;
@@ -85,8 +86,6 @@ public  class ConnectionController{
 					
 					ServerConnection c = new ServerConnection(sock,++connectionCounter);
 					connectionList.add(c);
-					c.start();
-					
 				}
 				
 				ss.close();

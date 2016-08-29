@@ -59,7 +59,7 @@ public class UserManager extends ComponentNode{
 			
 			ClientFrame f = ClientStart.getClient().getFrame();
 			
-			f.getTreeComp().nodeLeftClicked(u);			
+			f.getTreeComp().selectNode(u);		
 			
 		}
 

@@ -114,6 +114,11 @@ public class ClientFrame extends JFrame{
 				
 			}while(current != null);
 		}
+
+		@Override
+		public void nodeDoubleClicked(NodeEvent nodeEvent) {
+			nodeEvent.getNode().toggleExpanded();
+		}
 	}
 	
 	public Server getCurrentServer(){
